@@ -16,7 +16,10 @@ void APIController::setView(APIView view) {
 
 void APIController::loadConfig() {
     if (this->model.checkConfigExists() == 0) {
-        
+        if (!this->model.checkConfigFields()) {
+            this->view.displayConfigFieldMissing();
+            this->model.generateConfigFile();
+        }
     } else {
         this->view.displayConfigMissing();
         this->model.generateConfigFile();

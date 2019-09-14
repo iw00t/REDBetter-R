@@ -1,9 +1,17 @@
 #ifndef API_MODEL
 #define API_MODEL
 
+#include "../lib/json.hpp"
 #include <string>
 
 class APIModel {
+public:
+    APIModel() {}
+    ~APIModel() {}
+    bool checkConfigExists();
+    void generateConfigFile();
+    bool checkConfigFields();
+
 private:
     std::string FILE_PATH = "config.json";
     std::string username;
@@ -15,12 +23,7 @@ private:
     std::string tracker;
     std::string lastRequest;
     std::string rateLimit;
-
-public:
-    APIModel() {}
-    ~APIModel() {}
-    bool checkConfigExists();
-    void generateConfigFile();
+    bool jsonKeyExists(const nlohmann::json & j, const std::string & key);
 };
 
 #endif //API_MODEL

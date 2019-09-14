@@ -6,6 +6,7 @@ public:
     APIView() {}
     ~APIView() {}
     void displayConfigMissing();
+    void displayConfigFieldMissing();
 };
 
 #endif // API_VIEW
