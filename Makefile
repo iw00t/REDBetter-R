@@ -12,7 +12,7 @@ vpath %.h $(INCLUDEDIR)
 # "all" is the first target such that "make" and "make all" will have the same effect
 all: REDBetter-R
 
-REDBetter-R: src/main.cpp
+REDBetter-R: src/main.cpp src/APIModel.o src/APIView.o src/APIController.o
 	$(CXX) ${CXXFLAGS} $^ -o REDBetter-R
 
 # builds the object files (without linking into an executable)
@@ -23,4 +23,4 @@ REDBetter-R: src/main.cpp
 # -c : compile only, no linking
 
 clean:
-	rm -f */*.exe */*.o
+	rm -f REDBetter-R */*.o
