@@ -1,7 +1,7 @@
 #ifndef API_MODEL
 #define API_MODEL
 
-#include "../lib/json.hpp"
+#include "../../includes/json.hpp"
 #include <string>
 
 class APIModel {

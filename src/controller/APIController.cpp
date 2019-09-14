@@ -1,4 +1,4 @@
-#include "../headers/APIController.h"
+#include "APIController.h"
 #include <iostream>
 
 APIController::APIController(APIModel model, APIView view) {

@@ -1,6 +1,6 @@
-#include "../headers/APIModel.h"
-#include "../headers/APIView.h"
-#include "../headers/APIController.h"
+#include "model/APIModel.h"
+#include "view/APIView.h"
+#include "controller/APIController.h"
 
 int main() {
     APIModel apiModel;

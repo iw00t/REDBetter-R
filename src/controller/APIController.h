@@ -1,8 +1,8 @@
 #ifndef API_CONTROLLER
 #define API_CONTROLLER
 
-#include "APIModel.h"
-#include "APIView.h"
+#include "../model/APIModel.h"
+#include "../view/APIView.h"
 
 class APIController {
 public:

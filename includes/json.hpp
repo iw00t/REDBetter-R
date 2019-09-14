@@ -3489,10 +3489,7 @@ struct external_constructor<value_t::array>
         j.m_type = value_t::array;
         j.m_value = value_t::array;
         j.m_value.array->resize(arr.size());
-        if (arr.size() > 0)
-        {
-            std::copy(std::begin(arr), std::end(arr), j.m_value.array->begin());
-        }
+        std::copy(std::begin(arr), std::end(arr), j.m_value.array->begin());
         j.assert_invariant();
     }
 };
@@ -3885,8 +3882,9 @@ class input_stream_adapter : public input_adapter_protocol
 class input_buffer_adapter : public input_adapter_protocol
 {
   public:
+    JSON_HEDLEY_NON_NULL(2)
     input_buffer_adapter(const char* b, const std::size_t l) noexcept
-        : cursor(b), limit(b == nullptr ? nullptr : (b + l))
+        : cursor(b), limit(b + l)
     {}
 
     // delete because of pointer members
@@ -3900,7 +3898,6 @@ class input_buffer_adapter : public input_adapter_protocol
     {
         if (JSON_HEDLEY_LIKELY(cursor < limit))
         {
-            assert(cursor != nullptr and limit != nullptr);
             return std::char_traits<char>::to_int_type(*(cursor++));
         }
 
@@ -14267,7 +14264,7 @@ class serializer
         if (is_negative)
         {
             *buffer_ptr = '-';
-            abs_value = remove_sign(x);
+            abs_value = static_cast<number_unsigned_t>(std::abs(static_cast<std::intmax_t>(x)));
 
             // account one more byte for the minus sign
             n_chars = 1 + count_digits(abs_value);
@@ -14446,32 +14443,6 @@ class serializer
 
         state = utf8d[256u + state * 16u + type];
         return state;
-    }
-
-    /*
-     * Overload to make the compiler happy while it is instantiating
-     * dump_integer for number_unsigned_t.
-     * Must never be called.
-     */
-    number_unsigned_t remove_sign(number_unsigned_t x)
-    {
-        assert(false); // LCOV_EXCL_LINE
-        return x; // LCOV_EXCL_LINE
-    }
-
-    /*
-     * Helper function for dump_integer
-     *
-     * This function takes a negative signed integer and returns its absolute
-     * value as unsigned integer. The plus/minus shuffling is necessary as we can
-     * not directly remove the sign of an arbitrary signed integer as the
-     * absolute values of INT_MIN and INT_MAX are usually not the same. See
-     * #1708 for details.
-     */
-    inline number_unsigned_t remove_sign(number_integer_t x) noexcept
-    {
-        assert(x < 0 and x < (std::numeric_limits<number_integer_t>::max)());
-        return static_cast<number_unsigned_t>(-(x + 1)) + 1;
     }
 
   private:
