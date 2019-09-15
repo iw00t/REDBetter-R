@@ -1,13 +1,10 @@
 #include "TestCase.h"
 #include "../../src/model/ConfigModel.h"
-#include "../../src/view/ConfigView.h"
-#include "../../src/controller/ConfigController.h"
 
 class ConfigTest : public TestCase {
 public:
     ConfigTest() : TestCase() {}
     ConfigModel configModel;
-    ConfigView configView;
 };
 
 TEST_F(ConfigTest, CheckConfigExistsWithExistingFile) {
