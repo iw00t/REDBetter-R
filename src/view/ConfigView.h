@@ -1,10 +1,10 @@
-#ifndef API_VIEW
-#define API_VIEW
+#ifndef CONFIG_VIEW
+#define CONFIG_VIEW
 
-class APIView {
+class ConfigView {
 public:
-    APIView() {}
-    ~APIView() {}
+    ConfigView() {}
+    ~ConfigView() {}
     void displayConfigMissing();
     void displayConfigFieldMissing();
 };

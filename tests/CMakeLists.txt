@@ -18,7 +18,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # Add googletest directly to our build. This defines
 # the gtest and gtest_main targets.
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/lib/gtest
-                 ${CMAKE_CURRENT_BINARY_DIR}//lib/gtest/build
+                 ${CMAKE_CURRENT_BINARY_DIR}/lib/gtest/build
                  EXCLUDE_FROM_ALL)
 
 # The gtest/gtest_main targets carry header search path
@@ -29,5 +29,6 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(REDBetter-R_tests tests.cpp)
-target_link_libraries(REDBetter-R_tests gtest_main)
+add_executable(REDBetter-R_tests tests.cpp unit-tests/TestCase.h)
+target_link_libraries(REDBetter-R_tests gtest_main Controllers Models Views)
+add_test(NAME ConfigTest COMMAND REDBetter-R_tests)

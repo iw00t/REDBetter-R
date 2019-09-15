@@ -1,12 +1,12 @@
-#include "model/APIModel.h"
-#include "view/APIView.h"
-#include "controller/APIController.h"
+#include "model/ConfigModel.h"
+#include "view/ConfigView.h"
+#include "controller/ConfigController.h"
 
 int main() {
-    APIModel apiModel;
-    APIView apiView;
+    ConfigModel configModel;
+    ConfigView configView;
 
-    APIController apiController(apiModel, apiView);
+    ConfigController configController(configModel, configView);
 
-    apiController.loadConfig();
+    configController.loadConfig();
 }

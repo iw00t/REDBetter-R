@@ -5,16 +5,16 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(${MY_SOURCE_DIR}/model ${MY_SOURCE_DIR}/view ${MY_SOURCE_DIR}/controller)
 
 # models
-set(APIModel model/APIModel.h model/APIModel.cpp)
-add_library(Models ${APIModel})
+set(ConfigModel model/ConfigModel.h model/ConfigModel.cpp)
+add_library(Models ${ConfigModel})
 
 # views
-set(APIView view/APIView.h view/APIView.cpp)
-add_library(Views ${APIView})
+set(ConfigView view/ConfigView.h view/ConfigView.cpp)
+add_library(Views ${ConfigView})
 
 # controllers
-set(APIController controller/APIController.h controller/APIController.cpp)
-add_library(Controllers ${APIController})
+set(ConfigController controller/ConfigController.h controller/ConfigController.cpp)
+add_library(Controllers ${ConfigController})
 
 include_directories(. ../includes/)
 

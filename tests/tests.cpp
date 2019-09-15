@@ -1,4 +1,6 @@
-#include "../include/gtest/gtest.h"
+#include "gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "unit-tests/ConfigTest.cpp"
 
 int main(int argc, char** argv) {
     // The following line must be executed to initialize Google Mock

@@ -1,11 +1,10 @@
-#include "APIView.h"
-
+#include "ConfigView.h"
 #include <iostream>
 
-void APIView::displayConfigMissing() {
+void ConfigView::displayConfigMissing() {
     std::cout << "The config.json file is missing. Generating a new one..." << std::endl;
 }
 
-void APIView::displayConfigFieldMissing() {
+void ConfigView::displayConfigFieldMissing() {
     std::cout << "Some field(s) is missing in the config file. Generating a new one..." << std::endl;
 }

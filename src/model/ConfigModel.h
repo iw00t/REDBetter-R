@@ -1,19 +1,20 @@
-#ifndef API_MODEL
-#define API_MODEL
+#ifndef CONFIG_MODEL
+#define CONFIG_MODEL
 
 #include "../../includes/json.hpp"
 #include <string>
 
-class APIModel {
+const std::string FILE_PATH = "config.json";
+
+class ConfigModel {
 public:
-    APIModel() {}
-    ~APIModel() {}
-    bool checkConfigExists();
-    void generateConfigFile();
-    bool checkConfigFields();
+    ConfigModel() {}
+    ~ConfigModel() {}
+    bool configFileExists(const std::string & filePath = FILE_PATH);
+    void generateConfigFile(const std::string & filePath = FILE_PATH);
+    bool configHasCorrectKeys(const std::string & filePath = FILE_PATH);
 
 private:
-    std::string FILE_PATH = "config.json";
     std::string username;
     std::string password;
     std::string sessionCookie;
@@ -26,4 +27,4 @@ private:
     bool jsonKeyExists(const nlohmann::json & j, const std::string & key);
 };
 
-#endif //API_MODEL
+#endif //CONFIG_MODEL

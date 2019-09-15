@@ -1,22 +1,22 @@
-#include "APIController.h"
+#include "ConfigController.h"
 #include <iostream>
 
-APIController::APIController(APIModel model, APIView view) {
+ConfigController::ConfigController(ConfigModel model, ConfigView view) {
     this->setModel(model);
     this->setView(view);
 }
 
-void APIController::setModel(APIModel model) {
+void ConfigController::setModel(ConfigModel model) {
     this->model = model;
 }
 
-void APIController::setView(APIView view) {
+void ConfigController::setView(ConfigView view) {
     this->view = view;
 }
 
-void APIController::loadConfig() {
-    if (this->model.checkConfigExists() == 0) {
-        if (!this->model.checkConfigFields()) {
+void ConfigController::loadConfig() {
+    if (this->model.configFileExists() == 0) {
+        if (!this->model.configHasCorrectKeys()) {
             this->view.displayConfigFieldMissing();
             this->model.generateConfigFile();
         }

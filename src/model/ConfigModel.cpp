@@ -1,16 +1,16 @@
-#include "APIModel.h"
+#include "ConfigModel.h"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <vector>
 
-bool APIModel::checkConfigExists() {
-    std::ifstream configFile(this->FILE_PATH);
-    return configFile.fail();
+bool ConfigModel::configFileExists(const std::string & filePath) {
+    std::ifstream configFile(filePath);
+    return !configFile.fail();
 }
 
-void APIModel::generateConfigFile() {
-    std::ofstream configFile(this->FILE_PATH);
+void ConfigModel::generateConfigFile(const std::string & filePath) {
+    std::ofstream configFile(filePath);
     nlohmann::json configTemplate = {
         {"username", ""},
         {"password", ""},
@@ -27,8 +27,8 @@ void APIModel::generateConfigFile() {
     configFile.close();
 }
 
-bool APIModel::checkConfigFields() {
-    std::ifstream configFile(this->FILE_PATH);
+bool ConfigModel::configHasCorrectKeys(const std::string & filePath) {
+    std::ifstream configFile(filePath);
     nlohmann::json configContents;
     configFile >> configContents;
     std::vector<std::string> jsonFields = {
@@ -53,6 +53,6 @@ bool APIModel::checkConfigFields() {
     return true;
 }
 
-bool APIModel::jsonKeyExists(const nlohmann::json & j, const std::string & key) {
+bool ConfigModel::jsonKeyExists(const nlohmann::json & j, const std::string & key) {
     return j.find(key) != j.end();
 }
