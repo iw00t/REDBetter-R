@@ -6,6 +6,7 @@
 *.lo
 *.o
 *.obj
+*.pc
 
 # Precompiled Headers
 *.gch
@@ -34,11 +35,11 @@
 # Config file
 config.json
 
-# Executable
+# Executables
 REDBetter-R
+REDBetter-R_tests
 
 # CMake
-
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
