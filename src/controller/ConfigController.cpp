@@ -15,7 +15,7 @@ void ConfigController::setView(ConfigView view) {
 }
 
 void ConfigController::loadConfig() {
-    if (this->model.configFileExists() == 0) {
+    if (this->model.configFileExists()) {
         if (!this->model.configHasCorrectKeys()) {
             this->view.displayConfigFieldMissing();
             this->model.generateConfigFile();
