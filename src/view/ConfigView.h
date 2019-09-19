@@ -9,4 +9,4 @@ public:
     void displayConfigFieldMissing();
 };
 
-#endif // API_VIEW
+#endif // CONFIG_VIEW

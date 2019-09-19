@@ -17,4 +17,4 @@ private:
     ConfigView view;
 };
 
-#endif //API_CONTROLLER
+#endif //CONFIG_CONTROLLER
