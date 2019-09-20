@@ -1,7 +1,6 @@
 #include "ConfigModel.h"
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 #include <vector>
 
 bool ConfigModel::configFileExists(const std::string & filePath) {

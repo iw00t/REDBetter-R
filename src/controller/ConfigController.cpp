@@ -1,5 +1,4 @@
 #include "ConfigController.h"
-#include <iostream>
 
 ConfigController::ConfigController(ConfigModel model, ConfigView view) {
     this->setModel(model);

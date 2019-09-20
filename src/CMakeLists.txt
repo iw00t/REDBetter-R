@@ -6,15 +6,18 @@ include_directories(${MY_SOURCE_DIR}/model ${MY_SOURCE_DIR}/view ${MY_SOURCE_DIR
 
 # models
 set(ConfigModel model/ConfigModel.h model/ConfigModel.cpp)
-add_library(Models ${ConfigModel})
+set(APIModel model/APIModel.h model/APIModel.cpp)
+add_library(Models ${ConfigModel} ${APIModel})
 
 # views
 set(ConfigView view/ConfigView.h view/ConfigView.cpp)
-add_library(Views ${ConfigView})
+set(APIView view/APIView.h view/APIView.cpp)
+add_library(Views ${ConfigView} ${APIView})
 
 # controllers
 set(ConfigController controller/ConfigController.h controller/ConfigController.cpp)
-add_library(Controllers ${ConfigController})
+set(APIController controller/APIController.h controller/APIController.cpp)
+add_library(Controllers ${ConfigController} ${APIController})
 
 include_directories(. ../includes/)
 
