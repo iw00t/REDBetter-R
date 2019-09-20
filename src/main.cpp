@@ -9,4 +9,5 @@ int main() {
     REDBetterR::Config::ConfigController configController(configModel, configView);
 
     configController.loadConfig();
+    std::map<std::string, std::string> config = configController.getConfig();
 }

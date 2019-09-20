@@ -1,4 +1,5 @@
 #include "ConfigModel.h"
+
 #include <fstream>
 #include <iomanip>
 #include <vector>
@@ -56,6 +57,18 @@ namespace REDBetterR {
 
         bool ConfigModel::jsonKeyExists(const nlohmann::json & j, const std::string & key) {
             return j.find(key) != j.end();
+        }
+
+        void ConfigModel::loadConfig(const std::string & filePath) {
+            std::ifstream configFile(filePath);
+            nlohmann::json configJson;
+            configFile >> configJson;
+            std::map<std::string, std::string> configMap = configJson;
+            this->configMap = configMap;
+        }
+
+        std::map<std::string, std::string> ConfigModel::getConfigMap() {
+            return this->configMap;
         }
     }
 }

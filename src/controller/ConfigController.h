@@ -1,6 +1,8 @@
 #ifndef CONFIG_CONTROLLER
 #define CONFIG_CONTROLLER
 
+#include <map>
+
 #include "../model/ConfigModel.h"
 #include "../view/ConfigView.h"
 
@@ -13,6 +15,7 @@ namespace REDBetterR {
             void setModel(ConfigModel model);
             void setView(ConfigView view);
             void loadConfig();
+            std::map<std::string, std::string> getConfig();
 
         private:
             ConfigModel model;

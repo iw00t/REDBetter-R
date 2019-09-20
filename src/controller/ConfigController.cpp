@@ -20,11 +20,17 @@ namespace REDBetterR {
                 if (!this->model.configHasCorrectKeys()) {
                     this->view.displayConfigFieldMissing();
                     this->model.generateConfigFile();
+                } else {
+                    this->model.loadConfig();
                 }
             } else {
                 this->view.displayConfigMissing();
                 this->model.generateConfigFile();
             }
+        }
+
+        std::map<std::string, std::string> ConfigController::getConfig() {
+            return this->model.getConfigMap();
         }
     }
 }

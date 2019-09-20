@@ -1,8 +1,10 @@
 #ifndef CONFIG_MODEL
 #define CONFIG_MODEL
 
-#include "../../includes/json.hpp"
 #include <string>
+#include <map>
+
+#include "../../includes/json.hpp"
 
 namespace REDBetterR {
     namespace Config {
@@ -15,17 +17,11 @@ namespace REDBetterR {
             bool configFileExists(const std::string & filePath = FILE_PATH);
             void generateConfigFile(const std::string & filePath = FILE_PATH);
             bool configHasCorrectKeys(const std::string & filePath = FILE_PATH);
+            void loadConfig(const std::string & filePath = FILE_PATH);
+            std::map<std::string, std::string> getConfigMap();
 
         private:
-            std::string username;
-            std::string password;
-            std::string sessionCookie;
-            std::string authkey;
-            std::string passkey;
-            std::string userId;
-            std::string tracker;
-            std::string lastRequest;
-            std::string rateLimit;
+            std::map<std::string, std::string> configMap;
             bool jsonKeyExists(const nlohmann::json & j, const std::string & key);
         };
     }
