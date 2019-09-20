@@ -1,10 +1,14 @@
 #ifndef API_MODEL
 #define API_MODEL
 
-class APIModel {
-public:
-    APIModel() {}
-    ~APIModel() {}
-};
+namespace REDBetterR {
+    namespace API {
+        class APIModel {
+        public:
+            APIModel() {}
+            ~APIModel() {}
+        };
+    }
+}
 
 #endif //API_MODEL

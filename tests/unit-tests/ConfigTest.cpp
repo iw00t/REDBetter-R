@@ -4,7 +4,7 @@
 class ConfigTest : public TestCase {
 public:
     ConfigTest() : TestCase() {}
-    ConfigModel configModel;
+    REDBetterR::Config::ConfigModel configModel;
 };
 
 TEST_F(ConfigTest, CheckConfigExistsWithExistingFile) {

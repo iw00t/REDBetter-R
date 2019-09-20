@@ -4,17 +4,21 @@
 #include "../model/ConfigModel.h"
 #include "../view/ConfigView.h"
 
-class ConfigController {
-public:
-    ConfigController(ConfigModel model, ConfigView view);
-    ~ConfigController() {}
-    void setModel(ConfigModel model);
-    void setView(ConfigView view);
-    void loadConfig();
+namespace REDBetterR {
+    namespace Config {
+        class ConfigController {
+        public:
+            ConfigController(ConfigModel model, ConfigView view);
+            ~ConfigController() {}
+            void setModel(ConfigModel model);
+            void setView(ConfigView view);
+            void loadConfig();
 
-private:
-    ConfigModel model;
-    ConfigView view;
-};
+        private:
+            ConfigModel model;
+            ConfigView view;
+        };
+    }
+}
 
 #endif //CONFIG_CONTROLLER

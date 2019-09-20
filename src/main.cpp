@@ -3,10 +3,10 @@
 #include "controller/ConfigController.h"
 
 int main() {
-    ConfigModel configModel;
-    ConfigView configView;
+    REDBetterR::Config::ConfigModel configModel;
+    REDBetterR::Config::ConfigView configView;
 
-    ConfigController configController(configModel, configView);
+    REDBetterR::Config::ConfigController configController(configModel, configView);
 
     configController.loadConfig();
 }
