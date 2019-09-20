@@ -58,3 +58,8 @@ TEST_F(ConfigTest, CheckConfigKeysFlagsMissing24bitBehaviourField) {
 TEST_F(ConfigTest, CheckConfigKeysFlagsMissingPieceLengthField) {
     ASSERT_EQ(configModel.configHasCorrectKeys("tests/mock-data/missing-piece-length.json"), false);
 }
+
+TEST_F(ConfigTest, CheckMapCreatedFromConfigFile) {
+    configModel.loadConfig("tests/mock-data/all-keys.json");
+    ASSERT_EQ(configModel.getConfigMap().size(), 10);
+}
