@@ -12,6 +12,7 @@ namespace REDBetterR {
             ~APIController() {}
             void setModel(APIModel model);
             void setView(APIView view);
+            void login();
 
         private:
             APIModel model;

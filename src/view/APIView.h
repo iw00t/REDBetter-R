@@ -7,6 +7,8 @@ namespace REDBetterR {
         public:
             APIView() {}
             ~APIView() {}
+            void displayLoginWithCookie();
+            void displayLoginWithUsernamePassword();
         };
     }
 }

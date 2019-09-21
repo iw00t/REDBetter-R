@@ -14,5 +14,15 @@ namespace REDBetterR {
         void APIController::setView(APIView view) {
             this->view = view;
         }
+
+        void APIController::login() {
+            if (this->model.sessionCookieSet()) {
+                this->view.displayLoginWithCookie();
+                this->model.loginCookie();
+            } else {
+                this->view.displayLoginWithUsernamePassword();
+                this->model.loginUsernamePassword();
+            }
+        }
     }
 }
