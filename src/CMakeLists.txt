@@ -19,7 +19,8 @@ set(ConfigController controller/ConfigController.h controller/ConfigController.c
 set(APIController controller/APIController.h controller/APIController.cpp)
 add_library(Controllers ${ConfigController} ${APIController})
 
-include_directories(. ../includes/)
+include_directories(. ../opt/)
 
-add_executable(REDBetter-R main.cpp ../includes/json.hpp)
-target_link_libraries(REDBetter-R Controllers Models Views)
+add_executable(REDBetter-R main.cpp ../opt/json.hpp)
+target_link_libraries(REDBetter-R Controllers Models Views ${CPR_LIBRARIES})
+include_directories(${CPR_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})

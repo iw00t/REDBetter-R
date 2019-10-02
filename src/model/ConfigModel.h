@@ -4,11 +4,11 @@
 #include <string>
 #include <map>
 
-#include "../../includes/json.hpp"
+#include "../../opt/json.hpp"
 
 namespace REDBetterR {
     namespace Config {
-        const std::string FILE_PATH = "config.json";
+        const std::string FILE_PATH = "../config.json";
 
         class ConfigModel {
         public:
