@@ -1,6 +1,9 @@
 #ifndef CONFIG_VIEW
 #define CONFIG_VIEW
 
+#include <string>
+#include <vector>
+
 namespace REDBetterR {
     namespace Config {
         class ConfigView {
@@ -9,6 +12,7 @@ namespace REDBetterR {
             ~ConfigView() {}
             void displayConfigMissing();
             void displayConfigFieldMissing();
+            void displayEmptyFields(const std::vector<std::string> & emptyFields);
         };
     }
 }

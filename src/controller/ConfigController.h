@@ -14,7 +14,7 @@ namespace REDBetterR {
             ~ConfigController() {}
             void setModel(ConfigModel model);
             void setView(ConfigView view);
-            void loadConfig();
+            bool loadConfig();
             std::map<std::string, std::string> getConfig();
 
         private:

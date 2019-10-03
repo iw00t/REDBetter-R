@@ -1,4 +1,5 @@
 #include "ConfigController.h"
+#include <iostream>
 
 namespace REDBetterR {
     namespace Config {
@@ -15,18 +16,23 @@ namespace REDBetterR {
             this->view = view;
         }
 
-        void ConfigController::loadConfig() {
+        bool ConfigController::loadConfig() {
             if (this->model.configFileExists()) {
                 if (!this->model.configHasCorrectKeys()) {
                     this->view.displayConfigFieldMissing();
                     this->model.generateConfigFile();
-                } else {
+                } else if (this->model.emptyConfigFields().size() != 0) {
+                    this->view.displayEmptyFields(this->model.emptyConfigFields());
+                }
+                else {
                     this->model.loadConfig();
+                    return true;
                 }
             } else {
                 this->view.displayConfigMissing();
                 this->model.generateConfigFile();
             }
+            return false;
         }
 
         std::map<std::string, std::string> ConfigController::getConfig() {

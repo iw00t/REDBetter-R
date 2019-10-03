@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 
 namespace REDBetterR {
     namespace Config {
@@ -33,26 +34,26 @@ namespace REDBetterR {
             std::ifstream configFile(filePath);
             nlohmann::json configContents;
             configFile >> configContents;
-            std::vector<std::string> jsonFields = {
-                "username",
-                "password",
-                "session_cookie",
-                "data_dir",
-                "output_dir",
-                "torrent_dir",
-                "formats",
-                "media",
-                "24bit_behaviour",
-                "piece_length"
-            };
-
-            for (const auto & field: jsonFields) {
+            for (const auto & field: JSON_FIELDS) {
                 if (!jsonKeyExists(configContents, field)) {
                     return false;
                 }
             }
             configFile.close();
             return true;
+        }
+
+        std::vector<std::string> ConfigModel::emptyConfigFields(const std::string & filePath) {
+            std::vector<std::string> emptyFields;
+            std::ifstream configFile(filePath);
+            nlohmann::json configFields;
+            configFile >> configFields;
+            for (auto & field: configFields.items()) {
+                if (field.value() == "" && std::find(REQUIRED_JSON_FIELDS.begin(), REQUIRED_JSON_FIELDS.end(), field.value().dump()) != REQUIRED_JSON_FIELDS.end()) {
+                    emptyFields.push_back(field.key());
+                }
+            }
+            return emptyFields;
         }
 
         bool ConfigModel::jsonKeyExists(const nlohmann::json & j, const std::string & key) {

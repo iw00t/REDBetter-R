@@ -10,12 +10,13 @@ int main() {
     REDBetterR::Config::ConfigView configView;
     REDBetterR::Config::ConfigController configController(configModel, configView);
 
-    configController.loadConfig();
-    std::map<std::string, std::string> config = configController.getConfig();
+    if (configController.loadConfig()) {
+        std::map<std::string, std::string> config = configController.getConfig();
 
-    REDBetterR::API::APIModel apiModel(config);
-    REDBetterR::API::APIView apiView;
-    REDBetterR::API::APIController apiController(apiModel, apiView);
+        REDBetterR::API::APIModel apiModel(config);
+        REDBetterR::API::APIView apiView;
+        REDBetterR::API::APIController apiController(apiModel, apiView);
 
-    apiController.login();
+        apiController.login();
+    }
 }
