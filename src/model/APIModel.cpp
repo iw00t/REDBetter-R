@@ -1,5 +1,7 @@
 #include "APIModel.h"
 
+#include "../constants/APIConstants.cpp"
+
 #include <map>
 #include <iostream>
 #include <fstream>
@@ -11,7 +13,7 @@ namespace REDBetterR {
         }
 
         bool APIModel::sessionCookieSet() {
-            return this->config.at("session_cookie") != "";
+            return this->config.at(Constants::SESSION_COOKIE_FIELD) != "";
         }
 
         void APIModel::loginCookie() {
@@ -19,17 +21,17 @@ namespace REDBetterR {
         }
 
         bool APIModel::loginUsernamePassword() {
-            this->session->SetUrl(LOGIN_URL);
+            this->session->SetUrl(Constants::LOGIN_URL);
             this->session->SetPayload({
-                {USERNAME_FIELD, this->config.at(USERNAME_FIELD)},
-                {PASSWORD_FIELD, this->config.at(PASSWORD_FIELD)}
+                {Constants::USERNAME_FIELD, this->config.at(Constants::USERNAME_FIELD)},
+                {Constants::PASSWORD_FIELD, this->config.at(Constants::PASSWORD_FIELD)}
             });
             auto loginPost = this->session->Post();
-            if (loginPost.url == HOME_URL) {
-                nlohmann::json accountInfo = this->request(INDEX_ACTION);
-                this->authkey = *accountInfo.find(AUTHKEY_FIELD);
-                this->passkey = *accountInfo.find(PASSKEY_FIELD);
-                this->userId = *accountInfo.find(ID_FIELD);
+            if (loginPost.url == Constants::HOME_URL) {
+                nlohmann::json accountInfo = this->request(Constants::INDEX_ACTION);
+                this->authkey = *accountInfo.find(Constants::AUTHKEY_FIELD);
+                this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
+                this->userId = *accountInfo.find(Constants::ID_FIELD);
             } else {
                 // TODO: Logic for a failed login.
             }
@@ -37,16 +39,16 @@ namespace REDBetterR {
 
         nlohmann::json APIModel::request(const std::string & action) {
             cpr::Parameters requestGetParameters;
-            requestGetParameters.AddParameter(cpr::Parameter(ACTION_PARAMETER, action));
+            requestGetParameters.AddParameter(cpr::Parameter(Constants::ACTION_PARAMETER, action));
             if (!this->authkey.empty()) {
-                requestGetParameters.AddParameter(cpr::Parameter(AUTH_PARAMETER, this->authkey));
+                requestGetParameters.AddParameter(cpr::Parameter(Constants::AUTH_PARAMETER, this->authkey));
             }
-            this->session->SetUrl(AJAX_URL);
+            this->session->SetUrl(Constants::AJAX_URL);
             this->session->SetParameters(requestGetParameters);
             auto requestGet = this->session->Get();
             nlohmann::json responseJson = nlohmann::json::parse(requestGet.text);
-            if (*responseJson.find(STATUS_FIELD) == SUCCESS_RESPONSE) {
-                return *responseJson.find(RESPONSE_FIELD);
+            if (*responseJson.find(Constants::STATUS_FIELD) == Constants::SUCCESS_RESPONSE) {
+                return *responseJson.find(Constants::RESPONSE_FIELD);
             }
             // TODO: Handle bad request.
             return "";

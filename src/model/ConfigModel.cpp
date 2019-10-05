@@ -34,7 +34,7 @@ namespace REDBetterR {
             std::ifstream configFile(filePath);
             nlohmann::json configContents;
             configFile >> configContents;
-            for (const auto & field: JSON_FIELDS) {
+            for (const auto & field: Constants::JSON_FIELDS) {
                 if (!jsonKeyExists(configContents, field)) {
                     return false;
                 }
@@ -49,7 +49,9 @@ namespace REDBetterR {
             nlohmann::json configFields;
             configFile >> configFields;
             for (auto & field: configFields.items()) {
-                if (field.value() == "" && std::find(REQUIRED_JSON_FIELDS.begin(), REQUIRED_JSON_FIELDS.end(), field.value().dump()) != REQUIRED_JSON_FIELDS.end()) {
+                if (field.value() == "" && std::find(
+                    Constants::REQUIRED_JSON_FIELDS.begin(), Constants::REQUIRED_JSON_FIELDS.end(), field.value().dump()) !=
+                    Constants::REQUIRED_JSON_FIELDS.end()) {
                     emptyFields.push_back(field.key());
                 }
             }
