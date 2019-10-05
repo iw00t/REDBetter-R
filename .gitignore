@@ -36,8 +36,7 @@
 config.json
 
 # Executables
-REDBetter-R
-REDBetter-R_tests
+bin/
 
 # CMake
 CMakeLists.txt.user
