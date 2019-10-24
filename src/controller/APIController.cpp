@@ -21,7 +21,11 @@ namespace REDBetterR {
                 this->model.loginCookie();
             } else {
                 this->view.displayLoginWithUsernamePassword();
-                this->model.loginUsernamePassword();
+                if (this->model.loginUsernamePassword()) {
+                    this->view.displayLoginSuccessful();
+                } else {
+                    this->view.displayLoginFailed();
+                }
             }
         }
     }

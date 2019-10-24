@@ -9,6 +9,8 @@ namespace REDBetterR {
             ~APIView() {}
             void displayLoginWithCookie();
             void displayLoginWithUsernamePassword();
+            void displayLoginSuccessful();
+            void displayLoginFailed();
         };
     }
 }

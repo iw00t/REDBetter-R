@@ -11,5 +11,13 @@ namespace REDBetterR {
         void APIView::displayLoginWithUsernamePassword() {
             std::cout << "Attempting login with username and password..." << std::endl;
         }
+
+        void APIView::displayLoginSuccessful() {
+            std::cout << "Login successful..." << std::endl;
+        }
+
+        void APIView::displayLoginFailed() {
+            std::cout << "Login failed. Please review your config file..." << std::endl;
+        }
     }
 }

@@ -33,8 +33,9 @@ namespace REDBetterR {
                 this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
                 this->userId = *accountInfo.find(Constants::ID_FIELD);
             } else {
-                // TODO: Logic for a failed login.
+                return false;
             }
+            return true;
         }
 
         nlohmann::json APIModel::request(const std::string & action) {
