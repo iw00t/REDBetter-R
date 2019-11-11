@@ -10,14 +10,37 @@ namespace REDBetterR {
     namespace API {
         APIModel::APIModel(std::map<std::string, std::string> & config) {
             this->config = config;
+            this->session->SetVerifySsl(false);
+            this->session->SetHeader({
+                {"Connection", "keep-alive"},
+                {"Cache-Control", "max-age=0"},
+                {"User-Agent", "REDBetter-R"},
+                {"Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
+                {"Accept-Encoding", "gzip,deflate,sdch"},
+                {"Accept-Language", "en-US,en;q=0.8"},
+                {"Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3"}
+            });
         }
 
         bool APIModel::sessionCookieSet() {
             return this->config.at(Constants::SESSION_COOKIE_FIELD) != "";
         }
 
-        void APIModel::loginCookie() {
-            // TODO: Login mechanism when using session cookie.
+        bool APIModel::loginCookie() {
+            this->session->SetUrl(Constants::BASE_URL);
+            this->session->SetHeader({
+                {Constants::COOKIE_HEADER_FIELD, Constants::SESSION_FIELD + "=" + this->config.at(Constants::SESSION_COOKIE_FIELD)}
+            });
+            auto loginGet = this->session->Get();
+            try {
+                nlohmann::json accountInfo = this->request(Constants::INDEX_ACTION);
+                this->authkey = *accountInfo.find(Constants::AUTHKEY_FIELD);
+                this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
+                this->userId = *accountInfo.find(Constants::ID_FIELD);
+                return true;
+            } catch (const nlohmann::detail::parse_error & e) {
+                return false;
+            }
         }
 
         bool APIModel::loginUsernamePassword() {
@@ -27,15 +50,15 @@ namespace REDBetterR {
                 {Constants::PASSWORD_FIELD, this->config.at(Constants::PASSWORD_FIELD)}
             });
             auto loginPost = this->session->Post();
+            std::cout << this->request(Constants::INDEX_ACTION) << std::endl;
             if (loginPost.url == Constants::HOME_URL) {
                 nlohmann::json accountInfo = this->request(Constants::INDEX_ACTION);
                 this->authkey = *accountInfo.find(Constants::AUTHKEY_FIELD);
                 this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
                 this->userId = *accountInfo.find(Constants::ID_FIELD);
-            } else {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         nlohmann::json APIModel::request(const std::string & action) {

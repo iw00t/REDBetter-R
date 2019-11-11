@@ -15,7 +15,7 @@ namespace REDBetterR {
             APIModel() {}
             ~APIModel() {}
             bool sessionCookieSet();
-            void loginCookie();
+            bool loginCookie();
             bool loginUsernamePassword();
 
         private:

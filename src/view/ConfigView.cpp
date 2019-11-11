@@ -10,7 +10,7 @@ namespace REDBetterR {
         }
 
         void ConfigView::displayConfigFieldMissing() {
-            std::cout << "Some field(s) is missing in the config file. Generating a new one..." << std::endl;
+            std::cout << "Some field(s) are missing in the config file. Generating a new one..." << std::endl;
         }
 
         void ConfigView::displayEmptyFields(const std::vector<std::string> & emptyFields) {

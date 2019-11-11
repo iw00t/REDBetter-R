@@ -8,6 +8,8 @@ namespace REDBetterR {
         namespace Constants {
             const std::string USERNAME_FIELD = "username";
             const std::string PASSWORD_FIELD = "password";
+            const std::string SESSION_FIELD = "session";
+            const std::string COOKIE_HEADER_FIELD = "Cookie";
             const std::string BASE_URL = "https://redacted.ch/";
             const std::string LOGIN_URL = BASE_URL + "login.php";
             const std::string HOME_URL = BASE_URL + "index.php";

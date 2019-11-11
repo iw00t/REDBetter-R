@@ -16,16 +16,19 @@ namespace REDBetterR {
         }
 
         void APIController::login() {
+            bool loginSuccessful = false;
             if (this->model.sessionCookieSet()) {
                 this->view.displayLoginWithCookie();
-                this->model.loginCookie();
+                loginSuccessful = this->model.loginCookie();
             } else {
                 this->view.displayLoginWithUsernamePassword();
-                if (this->model.loginUsernamePassword()) {
-                    this->view.displayLoginSuccessful();
-                } else {
-                    this->view.displayLoginFailed();
-                }
+                loginSuccessful = this->model.loginUsernamePassword();
+            }
+
+            if (this->model.loginCookie()) {
+                this->view.displayLoginSuccessful();
+            } else {
+                this->view.displayLoginFailed();
             }
         }
     }
