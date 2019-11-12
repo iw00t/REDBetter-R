@@ -3,7 +3,6 @@
 #include "../constants/APIConstants.cpp"
 
 #include <map>
-#include <iostream>
 #include <fstream>
 
 namespace REDBetterR {
@@ -50,15 +49,15 @@ namespace REDBetterR {
                 {Constants::PASSWORD_FIELD, this->config.at(Constants::PASSWORD_FIELD)}
             });
             auto loginPost = this->session->Post();
-            std::cout << this->request(Constants::INDEX_ACTION) << std::endl;
-            if (loginPost.url == Constants::HOME_URL) {
+            try {
                 nlohmann::json accountInfo = this->request(Constants::INDEX_ACTION);
                 this->authkey = *accountInfo.find(Constants::AUTHKEY_FIELD);
                 this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
                 this->userId = *accountInfo.find(Constants::ID_FIELD);
                 return true;
+            } catch (const nlohmann::detail::parse_error & e) {
+                return false;
             }
-            return false;
         }
 
         nlohmann::json APIModel::request(const std::string & action) {
