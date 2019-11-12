@@ -1,6 +1,8 @@
 #ifndef API_MODEL
 #define API_MODEL
 
+#include "BaseModel.h"
+
 #include <cpr/cpr.h>
 #include "../../opt/json.hpp"
 
@@ -9,11 +11,9 @@
 
 namespace REDBetterR {
     namespace API {
-        class APIModel {
+        class APIModel : public BaseModel {
         public:
             APIModel(std::map<std::string, std::string> & config);
-            APIModel() {}
-            ~APIModel() {}
             bool sessionCookieSet();
             bool loginCookie();
             bool loginUsernamePassword();

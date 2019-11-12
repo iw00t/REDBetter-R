@@ -1,15 +1,15 @@
 #ifndef CONFIG_VIEW
 #define CONFIG_VIEW
 
+#include "BaseView.h"
+
 #include <string>
 #include <vector>
 
 namespace REDBetterR {
     namespace Config {
-        class ConfigView {
+        class ConfigView : public BaseView {
         public:
-            ConfigView() {}
-            ~ConfigView() {}
             void displayConfigMissing();
             void displayConfigFieldMissing();
             void displayEmptyFields(const std::vector<std::string> & emptyFields);

@@ -1,6 +1,7 @@
 #ifndef CONFIG_MODEL
 #define CONFIG_MODEL
 
+#include "BaseModel.h"
 #include "../constants/ConfigConstants.cpp"
 
 #include "../../opt/json.hpp"
@@ -11,10 +12,8 @@
 
 namespace REDBetterR {
     namespace Config {
-        class ConfigModel {
+        class ConfigModel : public BaseModel {
         public:
-            ConfigModel() {}
-            ~ConfigModel() {}
             bool configFileExists(const std::string & filePath = Constants::FILE_PATH);
             void generateConfigFile(const std::string & filePath = Constants::FILE_PATH);
             bool configHasCorrectKeys(const std::string & filePath = Constants::FILE_PATH);

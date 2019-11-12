@@ -1,12 +1,12 @@
 #ifndef API_VIEW
 #define API_VIEW
 
+#include "BaseView.h"
+
 namespace REDBetterR {
     namespace API {
-        class APIView {
+        class APIView : public BaseView {
         public:
-            APIView() {}
-            ~APIView() {}
             void displayLoginWithCookie();
             void displayLoginWithUsernamePassword();
             void displayLoginSuccessful();

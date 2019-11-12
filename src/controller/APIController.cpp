@@ -2,34 +2,31 @@
 
 namespace REDBetterR {
     namespace API {
-        APIController::APIController(APIModel model, APIView view) {
-            this->setModel(model);
-            this->setView(view);
-        }
-
-        void APIController::setModel(APIModel model) {
-            this->model = model;
-        }
-
-        void APIController::setView(APIView view) {
-            this->view = view;
-        }
+        APIController::APIController(APIModel & model, APIView & view) : BaseController(model, view) {}
 
         void APIController::login() {
             bool loginSuccessful = false;
-            if (this->model.sessionCookieSet()) {
-                this->view.displayLoginWithCookie();
-                loginSuccessful = this->model.loginCookie();
+            if (this->getModel()->sessionCookieSet()) {
+                this->getView()->displayLoginWithCookie();
+                loginSuccessful = this->getModel()->loginCookie();
             } else {
-                this->view.displayLoginWithUsernamePassword();
-                loginSuccessful = this->model.loginUsernamePassword();
+                this->getView()->displayLoginWithUsernamePassword();
+                loginSuccessful = this->getModel()->loginUsernamePassword();
             }
 
-            if (this->model.loginCookie()) {
-                this->view.displayLoginSuccessful();
+            if (this->getModel()->loginCookie()) {
+                this->getView()->displayLoginSuccessful();
             } else {
-                this->view.displayLoginFailed();
+                this->getView()->displayLoginFailed();
             }
+        }
+
+        APIModel* APIController::getModel(){
+            return dynamic_cast<APIModel*>(BaseController::getModel());
+        }
+
+        APIView* APIController::getView(){
+            return dynamic_cast<APIView*>(BaseController::getView());
         }
     }
 }
