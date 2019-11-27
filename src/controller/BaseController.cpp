@@ -1,25 +1,25 @@
 #include "BaseController.h"
-#include <iostream>
+
 
 namespace REDBetterR {
-    BaseController::BaseController(BaseModel & model, BaseView & view) {
-        this->setModel(model);
-        this->setView(view);
-    }
-
-    void BaseController::setModel(BaseModel & model) {
+    BaseController::BaseController(BaseModelInterface & model, BaseViewInterface & view) {
         this->model = &model;
-    }
-
-    void BaseController::setView(BaseView & view) {
         this->view = &view;
     }
 
-    BaseModel* BaseController::getModel() {
-        return dynamic_cast<BaseModel*>(this->model);
+    void BaseController::setModel(BaseModelInterface & model) {
+        this->model = &model;
     }
 
-    BaseView* BaseController::getView() {
-        return dynamic_cast<BaseView*>(this->view);
+    void BaseController::setView(BaseViewInterface & view) {
+        this->view = &view;
+    }
+
+    BaseModelInterface* BaseController::getModel() const {
+        return dynamic_cast<BaseModelInterface*>(this->model);
+    }
+
+    BaseViewInterface* BaseController::getView() const {
+        return dynamic_cast<BaseViewInterface*>(this->view);
     }
 }

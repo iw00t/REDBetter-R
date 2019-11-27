@@ -1,0 +1,12 @@
+{
+    "24bit_behaviour": "test",
+    "data_dir": "test",
+    "formats": "test",
+    "media": "test",
+    "output_dir": "test",
+    "password": "test",
+    "piece_length": "test",
+    "session_cookie": "",
+    "torrent_dir": "test",
+    "username": "test"
+}

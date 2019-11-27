@@ -5,21 +5,21 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(${MY_SOURCE_DIR}/model ${MY_SOURCE_DIR}/view ${MY_SOURCE_DIR}/controller)
 
 # models
-set(BaseModel model/BaseModel.h model/BaseModel.cpp)
-set(ConfigModel model/ConfigModel.h model/ConfigModel.cpp)
-set(APIModel model/APIModel.h model/APIModel.cpp)
+set(BaseModel model/BaseModelInterface.h model/BaseModel.h model/BaseModel.cpp)
+set(ConfigModel model/ConfigModelInterface.h model/ConfigModel.h model/ConfigModel.cpp)
+set(APIModel model/APIModelInterface.h model/APIModel.h model/APIModel.cpp)
 add_library(Models ${BaseModel} ${ConfigModel} ${APIModel})
 
 # views
-set(BaseView view/BaseView.h view/BaseView.cpp)
-set(ConfigView view/ConfigView.h view/ConfigView.cpp)
-set(APIView view/APIView.h view/APIView.cpp)
+set(BaseView view/BaseViewInterface.h view/BaseView.h view/BaseView.cpp)
+set(ConfigView view/ConfigViewInterface.h view/ConfigView.h view/ConfigView.cpp)
+set(APIView view/APIViewInterface.h view/APIView.h view/APIView.cpp)
 add_library(Views ${BaseView} ${ConfigView} ${APIView})
 
 # controllers
-set(BaseController controller/BaseController.h controller/BaseController.cpp)
-set(ConfigController controller/ConfigController.h controller/ConfigController.cpp)
-set(APIController controller/APIController.h controller/APIController.cpp)
+set(BaseController controller/BaseControllerInterface.h controller/BaseController.h controller/BaseController.cpp)
+set(ConfigController controller/ConfigControllerInterface.h controller/ConfigController.h controller/ConfigController.cpp)
+set(APIController controller/APIControllerInterface.h controller/APIController.h controller/APIController.cpp)
 add_library(Controllers ${BaseController} ${ConfigController} ${APIController})
 
 include_directories(. ../opt/)

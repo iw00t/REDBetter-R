@@ -2,7 +2,7 @@
 #define CONFIG_MODEL
 
 #include "BaseModel.h"
-#include "../constants/ConfigConstants.cpp"
+#include "ConfigModelInterface.h"
 
 #include "../../opt/json.hpp"
 
@@ -12,18 +12,18 @@
 
 namespace REDBetterR {
     namespace Config {
-        class ConfigModel : public BaseModel {
+        class ConfigModel : public BaseModel, public ConfigModelInterface {
         public:
-            bool configFileExists(const std::string & filePath = Constants::FILE_PATH);
-            void generateConfigFile(const std::string & filePath = Constants::FILE_PATH);
-            bool configHasCorrectKeys(const std::string & filePath = Constants::FILE_PATH);
-            std::vector<std::string> emptyConfigFields(const std::string & filePath = Constants::FILE_PATH);
-            void loadConfig(const std::string & filePath = Constants::FILE_PATH);
-            std::map<std::string, std::string> getConfigMap();
+            bool configFileExists(const std::string & filePath) const;
+            void generateConfigFile(const std::string & filePath) const;
+            bool configHasCorrectKeys(const std::string & filePath) const;
+            std::vector<std::string> emptyConfigFields(const std::string & filePath) const;
+            void loadConfig(const std::string & filePath);
+            std::map<std::string, std::string> getConfigMap() const;
 
         private:
             std::map<std::string, std::string> configMap;
-            bool jsonKeyExists(const nlohmann::json & j, const std::string & key);
+            bool jsonKeyExists(const nlohmann::json & j, const std::string & key) const;
         };
     }
 }

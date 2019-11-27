@@ -1,21 +1,25 @@
 #ifndef BASE_CONTROLLER
 #define BASE_CONTROLLER
 
+#include "BaseControllerInterface.h"
 #include "../model/BaseModel.h"
+#include "../model/BaseModelInterface.h"
 #include "../view/BaseView.h"
+#include "../view/BaseViewInterface.h"
 
 namespace REDBetterR {
-    class BaseController {
+    class BaseController : public BaseControllerInterface {
     public:
-        BaseController(BaseModel & model, BaseView & view);
+        BaseController() = default;
+        explicit BaseController(BaseModelInterface & model, BaseViewInterface & view);
         virtual ~BaseController() = default;
-        void setModel(BaseModel & model);
-        void setView(BaseView & view);
-        BaseModel* getModel();
-        BaseView* getView();
+        void setModel(BaseModelInterface & model);
+        void setView(BaseViewInterface & view);
+        BaseModelInterface* getModel() const;
+        BaseViewInterface* getView() const;
     private:
-        BaseModel* model;
-        BaseView* view;
+        BaseModelInterface* model;
+        BaseViewInterface* view;
     };
 }
 

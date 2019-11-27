@@ -5,15 +5,15 @@
 
 namespace REDBetterR {
     namespace Config {
-        void ConfigView::displayConfigMissing() {
+        void ConfigView::displayConfigMissing() const {
             std::cout << "The config.json file is missing. Generating a new one..." << std::endl;
         }
 
-        void ConfigView::displayConfigFieldMissing() {
+        void ConfigView::displayConfigFieldMissing() const {
             std::cout << "Some field(s) are missing in the config file. Generating a new one..." << std::endl;
         }
 
-        void ConfigView::displayEmptyFields(const std::vector<std::string> & emptyFields) {
+        void ConfigView::displayEmptyFields(const std::vector<std::string> & emptyFields) const {
             std::cout << "The following field(s) in the config file are empty, please ensure that they have a value:" << std::endl;
             std::string emptyFieldsString;
             for (const auto & field: emptyFields) {

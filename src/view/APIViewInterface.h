@@ -1,0 +1,22 @@
+#ifndef API_VIEW_INTERFACE
+#define API_VIEW_INTERFACE
+
+#include "BaseViewInterface.h"
+
+#include <string>
+#include <vector>
+
+namespace REDBetterR {
+    namespace API {
+        class APIViewInterface : public BaseViewInterface {
+        public:
+            ~APIViewInterface() override = default;
+            virtual void displayLoginWithCookie() const = 0;
+            virtual void displayLoginWithUsernamePassword() const = 0;
+            virtual void displayLoginSuccessful() const = 0;
+            virtual void displayLoginFailed() const = 0;
+        };
+    }
+}
+
+#endif // API_VIEW_INTERFACE

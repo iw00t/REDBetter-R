@@ -2,13 +2,11 @@
 
 #include "../constants/APIConstants.cpp"
 
-#include <map>
 #include <fstream>
 
 namespace REDBetterR {
     namespace API {
-        APIModel::APIModel(std::map<std::string, std::string> & config) {
-            this->config = config;
+        APIModel::APIModel() {
             this->session->SetVerifySsl(false);
             this->session->SetHeader({
                 {"Connection", "keep-alive"},
@@ -21,14 +19,14 @@ namespace REDBetterR {
             });
         }
 
-        bool APIModel::sessionCookieSet() {
-            return this->config.at(Constants::SESSION_COOKIE_FIELD) != "";
+        bool APIModel::sessionCookieSet(const std::map<std::string, std::string> & config) {
+            return config.at(Constants::SESSION_COOKIE_FIELD) != "";
         }
 
-        bool APIModel::loginCookie() {
+        bool APIModel::loginCookie(const std::map<std::string, std::string> & config) {
             this->session->SetUrl(Constants::BASE_URL);
             this->session->SetHeader({
-                {Constants::COOKIE_HEADER_FIELD, Constants::SESSION_FIELD + "=" + this->config.at(Constants::SESSION_COOKIE_FIELD)}
+                {Constants::COOKIE_HEADER_FIELD, Constants::SESSION_FIELD + "=" + config.at(Constants::SESSION_COOKIE_FIELD)}
             });
             auto loginGet = this->session->Get();
             try {
@@ -42,11 +40,11 @@ namespace REDBetterR {
             }
         }
 
-        bool APIModel::loginUsernamePassword() {
+        bool APIModel::loginUsernamePassword(const std::map<std::string, std::string> & config) {
             this->session->SetUrl(Constants::LOGIN_URL);
             this->session->SetPayload({
-                {Constants::USERNAME_FIELD, this->config.at(Constants::USERNAME_FIELD)},
-                {Constants::PASSWORD_FIELD, this->config.at(Constants::PASSWORD_FIELD)}
+                {Constants::USERNAME_FIELD, config.at(Constants::USERNAME_FIELD)},
+                {Constants::PASSWORD_FIELD, config.at(Constants::PASSWORD_FIELD)}
             });
             auto loginPost = this->session->Post();
             try {

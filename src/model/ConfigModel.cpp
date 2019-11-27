@@ -7,12 +7,12 @@
 
 namespace REDBetterR {
     namespace Config {
-        bool ConfigModel::configFileExists(const std::string & filePath) {
+        bool ConfigModel::configFileExists(const std::string & filePath) const {
             std::ifstream configFile(filePath);
             return !configFile.fail();
         }
 
-        void ConfigModel::generateConfigFile(const std::string & filePath) {
+        void ConfigModel::generateConfigFile(const std::string & filePath) const {
             std::ofstream configFile(filePath);
             nlohmann::json configTemplate = {
                 {"username", ""},
@@ -30,7 +30,7 @@ namespace REDBetterR {
             configFile.close();
         }
 
-        bool ConfigModel::configHasCorrectKeys(const std::string & filePath) {
+        bool ConfigModel::configHasCorrectKeys(const std::string & filePath) const {
             std::ifstream configFile(filePath);
             nlohmann::json configContents;
             configFile >> configContents;
@@ -43,7 +43,7 @@ namespace REDBetterR {
             return true;
         }
 
-        std::vector<std::string> ConfigModel::emptyConfigFields(const std::string & filePath) {
+        std::vector<std::string> ConfigModel::emptyConfigFields(const std::string & filePath) const {
             std::vector<std::string> emptyFields;
             std::ifstream configFile(filePath);
             nlohmann::json configFields;
@@ -58,7 +58,7 @@ namespace REDBetterR {
             return emptyFields;
         }
 
-        bool ConfigModel::jsonKeyExists(const nlohmann::json & j, const std::string & key) {
+        bool ConfigModel::jsonKeyExists(const nlohmann::json & j, const std::string & key) const {
             return j.find(key) != j.end();
         }
 
@@ -70,7 +70,7 @@ namespace REDBetterR {
             this->configMap = configMap;
         }
 
-        std::map<std::string, std::string> ConfigModel::getConfigMap() {
+        std::map<std::string, std::string> ConfigModel::getConfigMap() const {
             return this->configMap;
         }
     }

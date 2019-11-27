@@ -2,6 +2,7 @@
 #define API_MODEL
 
 #include "BaseModel.h"
+#include "APIModelInterface.h"
 
 #include <cpr/cpr.h>
 #include "../../opt/json.hpp"
@@ -11,16 +12,15 @@
 
 namespace REDBetterR {
     namespace API {
-        class APIModel : public BaseModel {
+        class APIModel : public BaseModel, public APIModelInterface {
         public:
-            APIModel(std::map<std::string, std::string> & config);
-            bool sessionCookieSet();
-            bool loginCookie();
-            bool loginUsernamePassword();
+            APIModel();
+            bool sessionCookieSet(const std::map<std::string, std::string> & config);
+            bool loginCookie(const std::map<std::string, std::string> & config);
+            bool loginUsernamePassword(const std::map<std::string, std::string> & config);
 
         private:
             cpr::Session* session = new cpr::Session();
-            std::map<std::string, std::string> config;
             std::string authkey;
             std::string passkey;
             unsigned int userId;

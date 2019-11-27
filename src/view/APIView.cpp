@@ -4,19 +4,19 @@
 
 namespace REDBetterR {
     namespace API {
-        void APIView::displayLoginWithCookie() {
+        void APIView::displayLoginWithCookie() const {
             std::cout << "Attempting login with session cookie..." << std::endl;
         }
 
-        void APIView::displayLoginWithUsernamePassword() {
+        void APIView::displayLoginWithUsernamePassword() const {
             std::cout << "Attempting login with username and password..." << std::endl;
         }
 
-        void APIView::displayLoginSuccessful() {
+        void APIView::displayLoginSuccessful() const {
             std::cout << "Login successful..." << std::endl;
         }
 
-        void APIView::displayLoginFailed() {
+        void APIView::displayLoginFailed() const {
             std::cout << "Login failed. Please review your config file..." << std::endl;
         }
     }

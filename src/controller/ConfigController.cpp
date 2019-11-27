@@ -1,39 +1,38 @@
 #include "ConfigController.h"
-#include <iostream>
+
 
 namespace REDBetterR {
     namespace Config {
-        ConfigController::ConfigController(ConfigModel & model, ConfigView & view) : BaseController(model, view) {}
+        ConfigController::ConfigController(ConfigModelInterface & model, ConfigViewInterface & view) : BaseController(model, view) {}
 
-        bool ConfigController::loadConfig() {
-            if (this->getModel()->configFileExists()) {
-                if (!this->getModel()->configHasCorrectKeys()) {
+        bool ConfigController::loadConfig(const std::string & filePath) const {
+            if (this->getModel()->configFileExists(filePath)) {
+                if (!this->getModel()->configHasCorrectKeys(filePath)) {
                     this->getView()->displayConfigFieldMissing();
-                    this->getModel()->generateConfigFile();
-                } else if (this->getModel()->emptyConfigFields().size() != 0) {
-                    this->getView()->displayEmptyFields(this->getModel()->emptyConfigFields());
-                }
-                else {
-                    this->getModel()->loadConfig();
+                    this->getModel()->generateConfigFile(filePath);
+                } else if (this->getModel()->emptyConfigFields(filePath).size() != 0) {
+                    this->getView()->displayEmptyFields(this->getModel()->emptyConfigFields(filePath));
+                } else {
+                    this->getModel()->loadConfig(filePath);
                     return true;
                 }
             } else {
                 this->getView()->displayConfigMissing();
-                this->getModel()->generateConfigFile();
+                this->getModel()->generateConfigFile(filePath);
             }
             return false;
         }
 
-        std::map<std::string, std::string> ConfigController::getConfig() {
+        std::map<std::string, std::string> ConfigController::getConfig() const {
             return this->getModel()->getConfigMap();
         }
 
-        ConfigModel* ConfigController::getModel(){
-            return dynamic_cast<ConfigModel*>(BaseController::getModel());
+        ConfigModelInterface* ConfigController::getModel() const {
+            return dynamic_cast<ConfigModelInterface*>(BaseController::getModel());
         }
 
-        ConfigView* ConfigController::getView(){
-            return dynamic_cast<ConfigView*>(BaseController::getView());
+        ConfigViewInterface* ConfigController::getView() const {
+            return dynamic_cast<ConfigViewInterface*>(BaseController::getView());
         }
     }
 }
