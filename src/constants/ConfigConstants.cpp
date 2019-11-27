@@ -1,14 +1,12 @@
-#ifndef CONFIG_CONSTANTS
-#define CONFIG_CONSTANTS
+#include "ConfigConstants.h"
 
-#include <vector>
-#include <string>
 
 namespace REDBetterR {
     namespace Config {
         namespace Constants {
-            const std::string FILE_PATH = "../config.json";
-            const std::vector<std::string> JSON_FIELDS = {
+            const std::string File::FILE_PATH = "../config.json";
+
+            const std::vector<std::string> JSON::JSON_FIELDS = {
                 "username",
                 "password",
                 "session_cookie",
@@ -20,7 +18,7 @@ namespace REDBetterR {
                 "24bit_behaviour",
                 "piece_length"
             };
-            const std::vector<std::string> REQUIRED_JSON_FIELDS = {
+            const std::vector<std::string> JSON::REQUIRED_JSON_FIELDS = {
                 "username",
                 "password",
                 "data_dir",
@@ -34,5 +32,3 @@ namespace REDBetterR {
         }
     }
 }
-
-#endif //CONFIG_CONSTANTS

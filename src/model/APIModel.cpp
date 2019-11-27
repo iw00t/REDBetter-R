@@ -1,6 +1,6 @@
 #include "APIModel.h"
 
-#include "../constants/APIConstants.cpp"
+#include "../constants/APIConstants.h"
 
 #include <fstream>
 
@@ -20,20 +20,20 @@ namespace REDBetterR {
         }
 
         bool APIModel::sessionCookieSet(const std::map<std::string, std::string> & config) {
-            return config.at(Constants::SESSION_COOKIE_FIELD) != "";
+            return config.at(Constants::Field::SESSION_COOKIE) != "";
         }
 
         bool APIModel::loginCookie(const std::map<std::string, std::string> & config) {
-            this->session->SetUrl(Constants::BASE_URL);
+            this->session->SetUrl(Constants::URL::BASE);
             this->session->SetHeader({
-                {Constants::COOKIE_HEADER_FIELD, Constants::SESSION_FIELD + "=" + config.at(Constants::SESSION_COOKIE_FIELD)}
+                {Constants::Header::SESSION_COOKIE, Constants::Field::SESSION + "=" + config.at(Constants::Field::SESSION_COOKIE)}
             });
             auto loginGet = this->session->Get();
             try {
-                nlohmann::json accountInfo = this->request(Constants::INDEX_ACTION);
-                this->authkey = *accountInfo.find(Constants::AUTHKEY_FIELD);
-                this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
-                this->userId = *accountInfo.find(Constants::ID_FIELD);
+                nlohmann::json accountInfo = this->request(Constants::Action::INDEX);
+                this->authkey = *accountInfo.find(Constants::Field::AUTHKEY);
+                this->passkey = *accountInfo.find(Constants::Field::PASSKEY);
+                this->userId = *accountInfo.find(Constants::Field::ID);
                 return true;
             } catch (const nlohmann::detail::parse_error & e) {
                 return false;
@@ -41,17 +41,17 @@ namespace REDBetterR {
         }
 
         bool APIModel::loginUsernamePassword(const std::map<std::string, std::string> & config) {
-            this->session->SetUrl(Constants::LOGIN_URL);
+            this->session->SetUrl(Constants::URL::LOGIN);
             this->session->SetPayload({
-                {Constants::USERNAME_FIELD, config.at(Constants::USERNAME_FIELD)},
-                {Constants::PASSWORD_FIELD, config.at(Constants::PASSWORD_FIELD)}
+                {Constants::Field::USERNAME, config.at(Constants::Field::USERNAME)},
+                {Constants::Field::PASSWORD, config.at(Constants::Field::PASSWORD)}
             });
             auto loginPost = this->session->Post();
             try {
-                nlohmann::json accountInfo = this->request(Constants::INDEX_ACTION);
-                this->authkey = *accountInfo.find(Constants::AUTHKEY_FIELD);
-                this->passkey = *accountInfo.find(Constants::PASSKEY_FIELD);
-                this->userId = *accountInfo.find(Constants::ID_FIELD);
+                nlohmann::json accountInfo = this->request(Constants::Action::INDEX);
+                this->authkey = *accountInfo.find(Constants::Field::AUTHKEY);
+                this->passkey = *accountInfo.find(Constants::Field::PASSKEY);
+                this->userId = *accountInfo.find(Constants::Field::ID);
                 return true;
             } catch (const nlohmann::detail::parse_error & e) {
                 return false;
@@ -59,22 +59,22 @@ namespace REDBetterR {
         }
 
         nlohmann::json APIModel::getUserInfo() const {
-            return this->request(Constants::INDEX_ACTION);
+            return this->request(Constants::Action::INDEX);
         }
 
         nlohmann::json APIModel::request(const std::string & action) const {
             cpr::Parameters requestGetParameters;
-            requestGetParameters.AddParameter(cpr::Parameter(Constants::ACTION_PARAMETER, action));
+            requestGetParameters.AddParameter(cpr::Parameter(Constants::Parameter::ACTION, action));
             if (!this->authkey.empty()) {
-                requestGetParameters.AddParameter(cpr::Parameter(Constants::AUTH_PARAMETER, this->authkey));
+                requestGetParameters.AddParameter(cpr::Parameter(Constants::Parameter::AUTH, this->authkey));
             }
-            this->session->SetUrl(Constants::AJAX_URL);
+            this->session->SetUrl(Constants::URL::AJAX);
             this->session->SetParameters(requestGetParameters);
             auto requestGet = this->session->Get();
             try {
                 nlohmann::json responseJson = nlohmann::json::parse(requestGet.text);
-                if (*responseJson.find(Constants::STATUS_FIELD) == Constants::SUCCESS_RESPONSE) {
-                    return *responseJson.find(Constants::RESPONSE_FIELD);
+                if (*responseJson.find(Constants::Field::STATUS) == Constants::Response::SUCCESS) {
+                    return *responseJson.find(Constants::Field::RESPONSE);
                 }
             } catch (nlohmann::json::parse_error & e) {
 				// TODO: Throw exception.

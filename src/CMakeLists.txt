@@ -22,8 +22,13 @@ set(ConfigController controller/ConfigControllerInterface.h controller/ConfigCon
 set(APIController controller/APIControllerInterface.h controller/APIController.h controller/APIController.cpp)
 add_library(Controllers ${BaseController} ${ConfigController} ${APIController})
 
+# constants
+set(APIConstants constants/APIConstants.h constants/APIConstants.cpp)
+set(ConfigConstants constants/ConfigConstants.h constants/ConfigConstants.cpp)
+add_library(Constants ${APIConstants} ${ConfigConstants})
+
 include_directories(. ../opt/)
 
 add_executable(REDBetter-R main.cpp ../opt/json.hpp)
-target_link_libraries(REDBetter-R Controllers Models Views ${CPR_LIBRARIES})
+target_link_libraries(REDBetter-R Controllers Models Views Constants ${CPR_LIBRARIES})
 include_directories(${CPR_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})

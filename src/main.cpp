@@ -4,7 +4,7 @@
 #include "model/APIModel.h"
 #include "view/APIView.h"
 #include "controller/APIController.h"
-#include "constants/ConfigConstants.cpp"
+#include "constants/ConfigConstants.h"
 
 
 int main() {
@@ -12,7 +12,7 @@ int main() {
     REDBetterR::Config::ConfigView configView;
     REDBetterR::Config::ConfigController configController(configModel, configView);
 
-    if (configController.loadConfig(REDBetterR::Config::Constants::FILE_PATH)) {
+    if (configController.loadConfig(REDBetterR::Config::Constants::File::FILE_PATH)) {
         std::map<std::string, std::string> config = configController.getConfig();
 
         REDBetterR::API::APIModel apiModel;

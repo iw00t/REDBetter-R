@@ -1,6 +1,6 @@
 #include "APIView.h"
 
-#include "../constants/APIConstants.cpp"
+#include "../constants/APIConstants.h"
 
 #include <iostream>
 #include <iomanip>
@@ -30,42 +30,42 @@ namespace REDBetterR {
             std::cout << "User Information" << std::endl;
             this->displaySpacer();
             std::cout << std::left
-                << std::setw(Constants::OUTPUT_SPACING)
+                << std::setw(Constants::Output::SPACING)
                 << "Username"
-                << Constants::OUTPUT_SPACER
-                << userInfo[Constants::USERNAME_FIELD].get<std::string>()
+                << Constants::Output::SPACER
+                << userInfo[Constants::Field::USERNAME].get<std::string>()
                 << std::endl;
             std::cout << std::left
-                << std::setw(Constants::OUTPUT_SPACING)
+                << std::setw(Constants::Output::SPACING)
                 << "Class"
-                << Constants::OUTPUT_SPACER
-                << userInfo[Constants::USER_STATS_FIELD][Constants::CLASS_FIELD].get<std::string>()
+                << Constants::Output::SPACER
+                << userInfo[Constants::Field::USER_STATS][Constants::Field::CLASS].get<std::string>()
                 << std::endl;
             std::cout << std::left
-                << std::setw(Constants::OUTPUT_SPACING)
+                << std::setw(Constants::Output::SPACING)
                 << "Uploaded"
-                << Constants::OUTPUT_SPACER
-                << this->bytesToGigabytes(userInfo[Constants::USER_STATS_FIELD][Constants::UPLOADED_FIELD].get<double>())
+                << Constants::Output::SPACER
+                << this->bytesToGigabytes(userInfo[Constants::Field::USER_STATS][Constants::Field::UPLOADED].get<double>())
                 << " GB"
                 << std::endl;
             std::cout << std::left
-                << std::setw(Constants::OUTPUT_SPACING)
+                << std::setw(Constants::Output::SPACING)
                 << "Downloaded"
-                << Constants::OUTPUT_SPACER
-                << this->bytesToGigabytes(userInfo[Constants::USER_STATS_FIELD][Constants::DOWNLOADED_FIELD].get<double>())
+                << Constants::Output::SPACER
+                << this->bytesToGigabytes(userInfo[Constants::Field::USER_STATS][Constants::Field::DOWNLOADED].get<double>())
                 << " GB"
                 << std::endl;
             std::cout << std::left
-                << std::setw(Constants::OUTPUT_SPACING)
+                << std::setw(Constants::Output::SPACING)
                 << "Ratio"
-                << Constants::OUTPUT_SPACER
-                << userInfo[Constants::USER_STATS_FIELD][Constants::RATIO_FIELD].get<float>()
+                << Constants::Output::SPACER
+                << userInfo[Constants::Field::USER_STATS][Constants::Field::RATIO].get<float>()
                 << std::endl;
             std::cout << std::left
-                << std::setw(Constants::OUTPUT_SPACING)
+                << std::setw(Constants::Output::SPACING)
                 << "Required Ratio"
-                << Constants::OUTPUT_SPACER
-                << userInfo[Constants::USER_STATS_FIELD][Constants::REQUIRED_RATIO_FIELD].get<float>()
+                << Constants::Output::SPACER
+                << userInfo[Constants::Field::USER_STATS][Constants::Field::REQUIRED_RATIO].get<float>()
                 << std::endl;
             this->displaySpacer();
         }
