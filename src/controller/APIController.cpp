@@ -16,6 +16,7 @@ namespace REDBetterR {
 
             if (loginSuccessful) {
                 this->getView()->displayLoginSuccessful();
+                this->getView()->displayUserInfo(this->getModel()->getUserInfo());
             } else {
                 this->getView()->displayLoginFailed();
             }

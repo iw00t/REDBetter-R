@@ -12,6 +12,7 @@ public:
     MOCK_CONST_METHOD0(displayLoginWithUsernamePassword, void());
     MOCK_CONST_METHOD0(displayLoginSuccessful, void());
     MOCK_CONST_METHOD0(displayLoginFailed, void());
+    MOCK_CONST_METHOD1(displayUserInfo, void(const nlohmann::json &));
 };
 
 #endif // MOCK_API_VIEW

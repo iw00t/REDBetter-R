@@ -11,6 +11,7 @@ public:
     MOCK_METHOD1(sessionCookieSet, bool(const std::map<std::string, std::string> &));
     MOCK_METHOD1(loginCookie, bool(const std::map<std::string, std::string> &));
     MOCK_METHOD1(loginUsernamePassword, bool(const std::map<std::string, std::string> &));
+    MOCK_CONST_METHOD0(getUserInfo, nlohmann::json());
 };
 
 #endif // MOCK_API_MODEL

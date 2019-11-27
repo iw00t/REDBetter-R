@@ -24,6 +24,14 @@ namespace REDBetterR {
             const std::string PASSKEY_FIELD = "passkey";
             const std::string ID_FIELD = "id";
             const std::string SESSION_COOKIE_FIELD = "session_cookie";
+            const std::string USER_STATS_FIELD = "userstats";
+            const std::string CLASS_FIELD = "class";
+            const std::string UPLOADED_FIELD = "uploaded";
+            const std::string DOWNLOADED_FIELD = "downloaded";
+            const std::string RATIO_FIELD = "ratio";
+            const std::string REQUIRED_RATIO_FIELD = "requiredratio";
+            const std::string OUTPUT_SPACER = " : ";
+            const int OUTPUT_SPACING = 14;
         }
     }
 }

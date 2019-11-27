@@ -58,7 +58,11 @@ namespace REDBetterR {
             }
         }
 
-        nlohmann::json APIModel::request(const std::string & action) {
+        nlohmann::json APIModel::getUserInfo() const {
+            return this->request(Constants::INDEX_ACTION);
+        }
+
+        nlohmann::json APIModel::request(const std::string & action) const {
             cpr::Parameters requestGetParameters;
             requestGetParameters.AddParameter(cpr::Parameter(Constants::ACTION_PARAMETER, action));
             if (!this->authkey.empty()) {
@@ -67,11 +71,14 @@ namespace REDBetterR {
             this->session->SetUrl(Constants::AJAX_URL);
             this->session->SetParameters(requestGetParameters);
             auto requestGet = this->session->Get();
-            nlohmann::json responseJson = nlohmann::json::parse(requestGet.text);
-            if (*responseJson.find(Constants::STATUS_FIELD) == Constants::SUCCESS_RESPONSE) {
-                return *responseJson.find(Constants::RESPONSE_FIELD);
-            }
-            // TODO: Handle bad request.
+            try {
+                nlohmann::json responseJson = nlohmann::json::parse(requestGet.text);
+                if (*responseJson.find(Constants::STATUS_FIELD) == Constants::SUCCESS_RESPONSE) {
+                    return *responseJson.find(Constants::RESPONSE_FIELD);
+                }
+            } catch (nlohmann::json::parse_error & e) {
+				// TODO: Throw exception.
+			}
             return "";
         }
     }

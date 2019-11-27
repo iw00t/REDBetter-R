@@ -3,8 +3,11 @@
 
 #include "BaseViewInterface.h"
 
+#include "../../opt/json.hpp"
 #include <string>
 #include <vector>
+#include <map>
+
 
 namespace REDBetterR {
     namespace API {
@@ -15,6 +18,7 @@ namespace REDBetterR {
             virtual void displayLoginWithUsernamePassword() const = 0;
             virtual void displayLoginSuccessful() const = 0;
             virtual void displayLoginFailed() const = 0;
+            virtual void displayUserInfo(const nlohmann::json &) const = 0;
         };
     }
 }

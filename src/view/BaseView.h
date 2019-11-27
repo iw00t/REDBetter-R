@@ -6,6 +6,9 @@ namespace REDBetterR {
     public:
         BaseView() = default;
         virtual ~BaseView() = default;
+
+    protected:
+        void displaySpacer() const;
     };
 }
 

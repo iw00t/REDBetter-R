@@ -12,6 +12,10 @@ namespace REDBetterR {
             void displayLoginWithUsernamePassword() const;
             void displayLoginSuccessful() const;
             void displayLoginFailed() const;
+            void displayUserInfo(const nlohmann::json & userInfo) const;
+        private:
+            std::string bytesToGigabytes(const double & bytes) const;
+            void displayLoginBanner() const;
         };
     }
 }
