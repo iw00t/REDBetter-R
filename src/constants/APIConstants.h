@@ -2,11 +2,18 @@
 #define API_CONSTANTS
 
 #include <string>
+#include <map>
 
 
 namespace REDBetterR {
     namespace API {
         namespace Constants {
+            class Metadata {
+            public:
+                static const bool VERIFY_SSL;
+                static const std::map<std::string, std::string> HEADER;
+            };
+
             class URL {
             public:
                 static const std::string BASE;

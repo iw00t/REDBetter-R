@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.7)
-project(cpr-example)
+project(REDBetter-R)
 
 if(NOT ${CMAKE_VERSION} LESS 3.2)
     set(CMAKE_CXX_STANDARD 11)
@@ -36,7 +36,3 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_subdirectory(opt)
 add_subdirectory(src)
 add_subdirectory(tests)
-
-# add_executable(REDBetter-R example.cpp)
-# target_link_libraries(REDBetter-R ${CPR_LIBRARIES})
-# include_directories(${CPR_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})

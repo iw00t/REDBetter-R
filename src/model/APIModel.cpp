@@ -6,17 +6,9 @@
 
 namespace REDBetterR {
     namespace API {
-        APIModel::APIModel() {
-            this->session->SetVerifySsl(false);
-            this->session->SetHeader({
-                {"Connection", "keep-alive"},
-                {"Cache-Control", "max-age=0"},
-                {"User-Agent", "REDBetter-R"},
-                {"Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
-                {"Accept-Encoding", "gzip,deflate,sdch"},
-                {"Accept-Language", "en-US,en;q=0.8"},
-                {"Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3"}
-            });
+        APIModel::APIModel(Common::CprHelperInterface & cprHelper, Common::JsonHelperInterface & jsonHelper) : BaseModel(cprHelper, jsonHelper) {
+            this->getCprHelper()->setVerifySsl(Constants::Metadata::VERIFY_SSL);
+            this->getCprHelper()->setHeader(Constants::Metadata::HEADER);
         }
 
         bool APIModel::sessionCookieSet(const std::map<std::string, std::string> & config) {
@@ -24,62 +16,111 @@ namespace REDBetterR {
         }
 
         bool APIModel::loginCookie(const std::map<std::string, std::string> & config) {
-            this->session->SetUrl(Constants::URL::BASE);
-            this->session->SetHeader({
-                {Constants::Header::SESSION_COOKIE, Constants::Field::SESSION + "=" + config.at(Constants::Field::SESSION_COOKIE)}
-            });
-            auto loginGet = this->session->Get();
-            try {
-                nlohmann::json accountInfo = this->request(Constants::Action::INDEX);
-                this->authkey = *accountInfo.find(Constants::Field::AUTHKEY);
-                this->passkey = *accountInfo.find(Constants::Field::PASSKEY);
-                this->userId = *accountInfo.find(Constants::Field::ID);
-                return true;
-            } catch (const nlohmann::detail::parse_error & e) {
-                return false;
+            if (!config.empty()) {
+                std::string sessionCookie;
+                if (config.count(Constants::Field::SESSION_COOKIE) > 0) {
+                    sessionCookie = config.at(Constants::Field::SESSION_COOKIE);
+                }
+                if (!sessionCookie.empty()) {
+                    this->getCprHelper()->setUrl(Constants::URL::BASE);
+                    this->getCprHelper()->setHeader({{
+                        Constants::Header::SESSION_COOKIE,
+                        Constants::Field::SESSION + "=" + config.at(Constants::Field::SESSION_COOKIE)
+                    }});
+                    this->getCprHelper()->get();
+                    try {
+                        nlohmann::json accountInfo = this->getUserInfo();
+                        if (!accountInfo.empty()) {
+                            this->setAuthkey(*accountInfo.find(Constants::Field::AUTHKEY));
+                            this->setPasskey(*accountInfo.find(Constants::Field::PASSKEY));
+                            this->setUserId(*accountInfo.find(Constants::Field::ID));
+                            return true;
+                        }
+                    } catch (const nlohmann::detail::parse_error & e) {
+                        // TODO: Logging
+                    }
+                }
             }
+            return false;
         }
 
         bool APIModel::loginUsernamePassword(const std::map<std::string, std::string> & config) {
-            this->session->SetUrl(Constants::URL::LOGIN);
-            this->session->SetPayload({
-                {Constants::Field::USERNAME, config.at(Constants::Field::USERNAME)},
-                {Constants::Field::PASSWORD, config.at(Constants::Field::PASSWORD)}
-            });
-            auto loginPost = this->session->Post();
-            try {
-                nlohmann::json accountInfo = this->request(Constants::Action::INDEX);
-                this->authkey = *accountInfo.find(Constants::Field::AUTHKEY);
-                this->passkey = *accountInfo.find(Constants::Field::PASSKEY);
-                this->userId = *accountInfo.find(Constants::Field::ID);
-                return true;
-            } catch (const nlohmann::detail::parse_error & e) {
-                return false;
+            if (!config.empty()) {
+                std::string username;
+                std::string password;
+                if (config.count(Constants::Field::USERNAME) > 0 && config.count(Constants::Field::PASSWORD) > 0) {
+                    username = config.at(Constants::Field::USERNAME);
+                    password = config.at(Constants::Field::PASSWORD);
+                }
+                if (!username.empty() && !password.empty()) {
+                    this->getCprHelper()->setUrl(Constants::URL::LOGIN);
+                    this->getCprHelper()->setPayload({
+                        {Constants::Field::USERNAME, config.at(Constants::Field::USERNAME)},
+                        {Constants::Field::PASSWORD, config.at(Constants::Field::PASSWORD)}
+                    });
+                    this->getCprHelper()->post();
+                    try {
+                        nlohmann::json accountInfo = this->getUserInfo();
+                        if (!accountInfo.empty()) {
+                            this->authkey = *accountInfo.find(Constants::Field::AUTHKEY);
+                            this->passkey = *accountInfo.find(Constants::Field::PASSKEY);
+                            this->userId = *accountInfo.find(Constants::Field::ID);
+                            return true;
+                        }
+                    } catch (const nlohmann::detail::parse_error & e) {
+                        // TODO: Logging
+                    }
+                }
             }
+            return false;
         }
 
         nlohmann::json APIModel::getUserInfo() const {
             return this->request(Constants::Action::INDEX);
         }
 
+        std::string APIModel::getAuthkey() const {
+            return this->authkey;
+        }
+
+        void APIModel::setAuthkey(const std::string & authkey) {
+            this->authkey = authkey;
+        }
+
+        std::string APIModel::getPasskey() const {
+            return this->passkey;
+        }
+
+        void APIModel::setPasskey(const std::string & passkey) {
+            this->passkey = passkey;
+        }
+
+        unsigned int APIModel::getUserId() const {
+            return this->userId;
+        }
+
+        void APIModel::setUserId(unsigned int userId) {
+            this->userId = userId;
+        }
+
         nlohmann::json APIModel::request(const std::string & action) const {
-            cpr::Parameters requestGetParameters;
-            requestGetParameters.AddParameter(cpr::Parameter(Constants::Parameter::ACTION, action));
+            std::map<std::string, std::string> requestGetParameters;
+            requestGetParameters.insert({Constants::Parameter::ACTION, action});
             if (!this->authkey.empty()) {
-                requestGetParameters.AddParameter(cpr::Parameter(Constants::Parameter::AUTH, this->authkey));
+                requestGetParameters.insert({Constants::Parameter::AUTH, this->authkey});
             }
-            this->session->SetUrl(Constants::URL::AJAX);
-            this->session->SetParameters(requestGetParameters);
-            auto requestGet = this->session->Get();
+            this->getCprHelper()->setUrl(Constants::URL::AJAX);
+            this->getCprHelper()->setParameters(requestGetParameters);
+            auto requestGet = this->getCprHelper()->get();
             try {
-                nlohmann::json responseJson = nlohmann::json::parse(requestGet.text);
-                if (*responseJson.find(Constants::Field::STATUS) == Constants::Response::SUCCESS) {
+                nlohmann::json responseJson = this->getJsonHelper()->parse(requestGet.text);
+                if (!responseJson.is_null() && !responseJson.empty() && *responseJson.find(Constants::Field::STATUS) == Constants::Response::SUCCESS) {
                     return *responseJson.find(Constants::Field::RESPONSE);
                 }
             } catch (nlohmann::json::parse_error & e) {
-				// TODO: Throw exception.
-			}
-            return "";
+                // TODO: Throw exception.
+            }
+            return {};
         }
     }
 }
