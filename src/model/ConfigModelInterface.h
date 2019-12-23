@@ -2,7 +2,7 @@
 #define CONFIG_MODEL_INTERFACE
 
 #include "BaseModelInterface.h"
-#include "../constants/ConfigConstants.h"
+#include "../common/constants/ConfigConstants.h"
 
 #include <string>
 #include <map>

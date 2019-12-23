@@ -3,8 +3,8 @@
 
 #include "BaseModel.h"
 #include "StatusModelInterface.h"
-#include "../common/CprHelperInterface.h"
-#include "../common/JsonHelperInterface.h"
+#include "../common/helper/CprHelperInterface.h"
+#include "../common/helper/JsonHelperInterface.h"
 
 
 namespace REDBetterR {

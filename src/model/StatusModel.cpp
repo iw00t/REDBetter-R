@@ -1,8 +1,8 @@
 #include "StatusModel.h"
 
-#include "../constants/StatusConstants.h"
-#include "../common/CprHelper.h"
-#include "../common/JsonHelper.h"
+#include "../common/constants/StatusConstants.h"
+#include "../common/helper/CprHelper.h"
+#include "../common/helper/JsonHelper.h"
 
 
 namespace REDBetterR {

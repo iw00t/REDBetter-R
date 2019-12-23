@@ -24,18 +24,15 @@ set(StatusController controller/StatusControllerInterface.h controller/StatusCon
 add_library(Controllers ${BaseController} ${ConfigController} ${APIController} ${StatusController})
 
 # common
-set(CprHelper common/CprHelperInterface.h common/CprHelper.h common/CprHelper.cpp)
-set(JsonHelper common/JsonHelperInterface.h common/JsonHelper.h common/JsonHelper.cpp)
-add_library(Common ${CprHelper} ${JsonHelper})
-
-# constants
-set(APIConstants constants/APIConstants.h constants/APIConstants.cpp)
-set(ConfigConstants constants/ConfigConstants.h constants/ConfigConstants.cpp)
-set(StatusConstants constants/StatusConstants.h constants/StatusConstants.cpp)
-add_library(Constants ${APIConstants} ${ConfigConstants} ${StatusConstants})
+set(CprHelper common/helper/CprHelperInterface.h common/helper/CprHelper.h common/helper/CprHelper.cpp)
+set(JsonHelper common/helper/JsonHelperInterface.h common/helper/JsonHelper.h common/helper/JsonHelper.cpp)
+set(APIConstants common/constants/APIConstants.h common/constants/APIConstants.cpp)
+set(ConfigConstants common/constants/ConfigConstants.h common/constants/ConfigConstants.cpp)
+set(StatusConstants common/constants/StatusConstants.h common/constants/StatusConstants.cpp)
+add_library(Common ${CprHelper} ${JsonHelper} ${APIConstants} ${ConfigConstants} ${StatusConstants})
 
 include_directories(. ../opt/)
 
 add_executable(REDBetter-R main.cpp)
-target_link_libraries(REDBetter-R Controllers Models Views Common Constants ${CPR_LIBRARIES})
+target_link_libraries(REDBetter-R Controllers Models Views Common ${CPR_LIBRARIES})
 include_directories(${CPR_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})

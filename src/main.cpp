@@ -7,10 +7,10 @@
 #include "model/StatusModel.h"
 #include "view/StatusView.h"
 #include "controller/StatusController.h"
-#include "constants/ConfigConstants.h"
-#include "common/CprHelper.h"
-#include "common/JsonHelper.h"
-#include <iostream>
+#include "common/constants/ConfigConstants.h"
+#include "common/helper/CprHelper.h"
+#include "common/helper/JsonHelper.h"
+
 
 int main() {
     REDBetterR::Common::CprHelper cprHelper;

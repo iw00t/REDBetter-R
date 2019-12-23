@@ -1,6 +1,6 @@
 #include "APIView.h"
 
-#include "../constants/APIConstants.h"
+#include "../common/constants/APIConstants.h"
 
 #include <iostream>
 #include <iomanip>

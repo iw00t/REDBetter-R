@@ -1,7 +1,7 @@
 #ifndef JSON_HELPER_INTERFACE
 #define JSON_HELPER_INTERFACE
 
-#include "../../opt/json.hpp"
+#include "../../../opt/json.hpp"
 
 #include <string>
 

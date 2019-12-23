@@ -3,7 +3,7 @@
 
 #include "gmock/gmock.h"
 
-#include "../../src/common/CprHelperInterface.h"
+#include "../../src/common/helper/CprHelperInterface.h"
 
 
 class MockCprHelper : public REDBetterR::Common::CprHelperInterface {

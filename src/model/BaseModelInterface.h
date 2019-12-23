@@ -1,8 +1,8 @@
 #ifndef BASE_MODEL_INTERFACE
 #define BASE_MODEL_INTERFACE
 
-#include "../common/CprHelperInterface.h"
-#include "../common/JsonHelperInterface.h"
+#include "../common/helper/CprHelperInterface.h"
+#include "../common/helper/JsonHelperInterface.h"
 
 
 namespace REDBetterR {

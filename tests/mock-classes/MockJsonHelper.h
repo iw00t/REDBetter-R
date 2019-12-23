@@ -3,7 +3,7 @@
 
 #include "gmock/gmock.h"
 
-#include "../../src/common/JsonHelperInterface.h"
+#include "../../src/common/helper/JsonHelperInterface.h"
 
 
 class MockJsonHelper : public REDBetterR::Common::JsonHelperInterface {

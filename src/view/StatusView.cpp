@@ -1,6 +1,6 @@
 #include "StatusView.h"
 
-#include "../constants/StatusConstants.h"
+#include "../common/constants/StatusConstants.h"
 
 #include <iostream>
 #include <iomanip>
@@ -33,7 +33,7 @@ namespace REDBetterR {
             std::string latency = status.find(Constants::JSON::LATENCY)->get<std::string>();
             std::cout << "Online?: "
                       << online 
-                      << ", Latency: " 
+                      << ", Latency: "
                       << latency
                       << std::endl;
         }

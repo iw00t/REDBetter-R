@@ -1,7 +1,7 @@
 #include "TestCase.h"
 
 #include "../../src/model/APIModel.h"
-#include "../../src/constants/APIConstants.h"
+#include "../../src/common/constants/APIConstants.h"
 #include "../mock-classes/MockCprHelper.h"
 #include "../mock-classes/MockJsonHelper.h"
 

@@ -1,6 +1,6 @@
 #include "TestCase.h"
 #include "../../src/model/StatusModel.h"
-#include "../../src/constants/StatusConstants.h"
+#include "../../src/common/constants/StatusConstants.h"
 #include "../mock-classes/MockCprHelper.h"
 #include "../mock-classes/MockJsonHelper.h"
 
