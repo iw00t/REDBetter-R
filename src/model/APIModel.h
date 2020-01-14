@@ -11,7 +11,7 @@ namespace REDBetterR {
     namespace API {
         class APIModel : public BaseModel, public APIModelInterface {
         public:
-            APIModel(Common::CprHelperInterface & cprHelper, Common::JsonHelperInterface & jsonHelper);
+            APIModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper, std::shared_ptr<Common::JsonHelperInterface> & jsonHelper);
             bool sessionCookieSet(const std::map<std::string, std::string> & config);
             bool loginCookie(const std::map<std::string, std::string> & config);
             bool loginUsernamePassword(const std::map<std::string, std::string> & config);

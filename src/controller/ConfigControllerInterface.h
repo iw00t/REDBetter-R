@@ -12,8 +12,8 @@ namespace REDBetterR {
         class ConfigControllerInterface : public BaseControllerInterface {
         public:
             ~ConfigControllerInterface() override = default;
-            virtual bool loadConfig(const std::string &) const = 0;
-            virtual std::map<std::string, std::string> getConfig() const = 0;
+            virtual bool loadConfig(const std::string &) = 0;
+            virtual std::map<std::string, std::string> getConfig() = 0;
         };
     }
 }

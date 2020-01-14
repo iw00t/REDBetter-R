@@ -1,11 +1,9 @@
 #ifndef CONFIG_CONTROLLER
 #define CONFIG_CONTROLLER
 
-#include "ConfigControllerInterface.h"
 #include "BaseController.h"
-#include "../model/ConfigModel.h"
+#include "ConfigControllerInterface.h"
 #include "../model/ConfigModelInterface.h"
-#include "../view/ConfigView.h"
 #include "../view/ConfigViewInterface.h"
 
 #include <map>
@@ -15,14 +13,13 @@ namespace REDBetterR {
     namespace Config {
         class ConfigController : public BaseController, public ConfigControllerInterface {
         public:
-            ConfigController() = default;
-            explicit ConfigController(ConfigModelInterface & model, ConfigViewInterface & view);
-            bool loadConfig(const std::string & filePath) const;
-            std::map<std::string, std::string> getConfig() const;
+            ConfigController(std::shared_ptr<ConfigModelInterface> & model, std::shared_ptr<ConfigViewInterface> & view);
+            bool loadConfig(const std::string & filePath);
+            std::map<std::string, std::string> getConfig();
 
         private:
-            ConfigModelInterface* getModel() const;
-            ConfigViewInterface* getView() const;
+            std::shared_ptr<ConfigModelInterface> getModel();
+            std::shared_ptr<ConfigViewInterface> getView();
         };
     }
 }

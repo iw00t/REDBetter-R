@@ -11,15 +11,15 @@ namespace REDBetterR {
     class BaseModel : public BaseModelInterface {
     public:
         BaseModel() = default;
-        explicit BaseModel(Common::CprHelperInterface & cprHelper, Common::JsonHelperInterface & jsonHelper);
-        explicit BaseModel(Common::CprHelperInterface & cprHelper);
-        explicit BaseModel(Common::JsonHelperInterface & jsonHelper);
+        explicit BaseModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper, std::shared_ptr<Common::JsonHelperInterface> & jsonHelper);
+        explicit BaseModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper);
+        explicit BaseModel(std::shared_ptr<Common::JsonHelperInterface> & jsonHelper);
         virtual ~BaseModel() = default;
-        Common::CprHelperInterface* getCprHelper() const;
-        Common::JsonHelperInterface* getJsonHelper() const;
+        std::shared_ptr<Common::CprHelperInterface> getCprHelper() const;
+        std::shared_ptr<Common::JsonHelperInterface> getJsonHelper() const;
     private:
-        Common::CprHelperInterface* cprHelper;
-        Common::JsonHelperInterface* jsonHelper;
+        std::shared_ptr<Common::CprHelperInterface> cprHelper;
+        std::shared_ptr<Common::JsonHelperInterface> jsonHelper;
     };
 }
 

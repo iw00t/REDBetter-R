@@ -11,7 +11,7 @@ namespace REDBetterR {
     namespace Status {
         class StatusModel : public BaseModel, public StatusModelInterface {
         public:
-            StatusModel(Common::CprHelperInterface & cprHelper, Common::JsonHelperInterface & jsonHelper);
+            StatusModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper, std::shared_ptr<Common::JsonHelperInterface> & jsonHelper);
             nlohmann::json getStatus() const;
         };
     }

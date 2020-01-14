@@ -13,15 +13,19 @@ using testing::Return;
 class APIModelTest : public TestCase {
 public:
     APIModelTest() : TestCase() {
-        this->apiModel = new REDBetterR::API::APIModel(this->mockCprHelper, this->mockJsonHelper);
+        this->mockCprHelper = std::make_shared<MockCprHelper>();
+        this->mockJsonHelper = std::make_shared<MockJsonHelper>();
+        std::shared_ptr<REDBetterR::Common::CprHelperInterface> cprHelper = this->mockCprHelper;
+        std::shared_ptr<REDBetterR::Common::JsonHelperInterface> jsonHelper = this->mockJsonHelper;
+        this->apiModel = std::make_shared<REDBetterR::API::APIModel>(cprHelper, jsonHelper);
         this->MOCK_VALID_CONFIG = this->loadConfig("../tests/mock-data/config-files/all-keys.json");
         this->MOCK_EMPTY_FIELDS_CONFIG = this->loadConfig("../tests/mock-data/config-files/empty-fields.json");
         this->MOCK_MISSING_SESSION_COOKIE_CONFIG = this->loadConfig("../tests/mock-data/config-files/missing-session-cookie.json");
     }
 
-    MockCprHelper mockCprHelper;
-    MockJsonHelper mockJsonHelper;
-    REDBetterR::API::APIModel* apiModel;
+    std::shared_ptr<MockCprHelper> mockCprHelper;
+    std::shared_ptr<MockJsonHelper> mockJsonHelper;
+    std::shared_ptr<REDBetterR::API::APIModel> apiModel;
     std::string MOCK_AUTHKEY = "mockAuthkey";
     std::string MOCK_PASSKEY = "mockPasskey";
     unsigned int MOCK_USER_ID = 2060;
@@ -86,19 +90,19 @@ TEST_F(APIModelTest, sessionCookieSet_returnsFalseWhenSessionCookieFieldEmpty) {
 }
 
 TEST_F(APIModelTest, loginCookie_returnsTrueWhenAccountInfoIsFound) {
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::BASE)).Times(1);
-    EXPECT_CALL(mockCprHelper, setHeader(std::map<std::string, std::string>{{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::BASE)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setHeader(std::map<std::string, std::string>{{
         REDBetterR::API::Constants::Header::SESSION_COOKIE,
         REDBetterR::API::Constants::Field::SESSION + "=" +
         this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::SESSION_COOKIE)}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, get()).Times(2)
+    EXPECT_CALL(*mockCprHelper, get()).Times(2)
         .WillRepeatedly(Return(MOCK_INDEX_RESPONSE_SUCCESS));
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
-    EXPECT_CALL(mockCprHelper, setParameters(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setParameters(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Parameter::ACTION, REDBetterR::API::Constants::Action::INDEX}
     })).Times(1);
-    EXPECT_CALL(mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
+    EXPECT_CALL(*mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
         .WillOnce(Return(MOCK_INDEX_RESPONSE_SUCCESS_JSON));
 
     EXPECT_TRUE(this->apiModel->loginCookie(this->MOCK_VALID_CONFIG));
@@ -108,19 +112,19 @@ TEST_F(APIModelTest, loginCookie_returnsTrueWhenAccountInfoIsFound) {
 }
 
 TEST_F(APIModelTest, loginCookie_returnsFalseWhenResponseIsEmpty) {
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::BASE)).Times(1);
-    EXPECT_CALL(mockCprHelper, setHeader(std::map<std::string, std::string>{{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::BASE)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setHeader(std::map<std::string, std::string>{{
         REDBetterR::API::Constants::Header::SESSION_COOKIE,
         REDBetterR::API::Constants::Field::SESSION + "=" +
         this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::SESSION_COOKIE)}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, get()).Times(2)
+    EXPECT_CALL(*mockCprHelper, get()).Times(2)
         .WillRepeatedly(Return(MOCK_INDEX_RESPONSE_SUCCESS));
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
-    EXPECT_CALL(mockCprHelper, setParameters(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setParameters(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Parameter::ACTION, REDBetterR::API::Constants::Action::INDEX}
     })).Times(1);
-    EXPECT_CALL(mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
+    EXPECT_CALL(*mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
         .WillOnce(Return(MOCK_EMPTY_JSON));
 
     EXPECT_FALSE(this->apiModel->loginCookie(this->MOCK_VALID_CONFIG));
@@ -130,19 +134,19 @@ TEST_F(APIModelTest, loginCookie_returnsFalseWhenResponseIsEmpty) {
 }
 
 TEST_F(APIModelTest, loginCookie_returnsFalseWhenResponseIsNull) {
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::BASE)).Times(1);
-    EXPECT_CALL(mockCprHelper, setHeader(std::map<std::string, std::string>{{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::BASE)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setHeader(std::map<std::string, std::string>{{
         REDBetterR::API::Constants::Header::SESSION_COOKIE,
         REDBetterR::API::Constants::Field::SESSION + "=" +
         this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::SESSION_COOKIE)}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, get()).Times(2)
+    EXPECT_CALL(*mockCprHelper, get()).Times(2)
         .WillRepeatedly(Return(MOCK_INDEX_RESPONSE_SUCCESS));
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
-    EXPECT_CALL(mockCprHelper, setParameters(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setParameters(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Parameter::ACTION, REDBetterR::API::Constants::Action::INDEX}
     })).Times(1);
-    EXPECT_CALL(mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
+    EXPECT_CALL(*mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
         .WillOnce(Return(nullptr));
 
     EXPECT_FALSE(this->apiModel->loginCookie(MOCK_VALID_CONFIG));
@@ -166,19 +170,19 @@ TEST_F(APIModelTest, loginCookie_returnsFalseWhenConfigIsEmpty) {
 }
 
 TEST_F(APIModelTest, loginUsernamePassword_returnsTrueWhenAccountInfoIsFound) {
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::LOGIN)).Times(1);
-    EXPECT_CALL(mockCprHelper, setPayload(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::LOGIN)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setPayload(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Field::USERNAME, this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::USERNAME)},
         {REDBetterR::API::Constants::Field::PASSWORD, this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::PASSWORD)}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, post()).Times(1);
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
-    EXPECT_CALL(mockCprHelper, setParameters(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, post()).Times(1);
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setParameters(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Parameter::ACTION, REDBetterR::API::Constants::Action::INDEX}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, get()).Times(1)
+    EXPECT_CALL(*mockCprHelper, get()).Times(1)
         .WillRepeatedly(Return(MOCK_INDEX_RESPONSE_SUCCESS));
-    EXPECT_CALL(mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
+    EXPECT_CALL(*mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
         .WillOnce(Return(MOCK_INDEX_RESPONSE_SUCCESS_JSON));
 
     EXPECT_TRUE(this->apiModel->loginUsernamePassword(this->MOCK_VALID_CONFIG));
@@ -188,19 +192,19 @@ TEST_F(APIModelTest, loginUsernamePassword_returnsTrueWhenAccountInfoIsFound) {
 }
 
 TEST_F(APIModelTest, loginUsernamePassword_returnsFalseWhenResponseIsEmpty) {
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::LOGIN)).Times(1);
-    EXPECT_CALL(mockCprHelper, setPayload(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::LOGIN)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setPayload(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Field::USERNAME, this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::USERNAME)},
         {REDBetterR::API::Constants::Field::PASSWORD, this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::PASSWORD)}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, post()).Times(1);
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
-    EXPECT_CALL(mockCprHelper, setParameters(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, post()).Times(1);
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setParameters(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Parameter::ACTION, REDBetterR::API::Constants::Action::INDEX}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, get()).Times(1)
+    EXPECT_CALL(*mockCprHelper, get()).Times(1)
         .WillRepeatedly(Return(MOCK_INDEX_RESPONSE_SUCCESS));
-    EXPECT_CALL(mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
+    EXPECT_CALL(*mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
         .WillOnce(Return(MOCK_EMPTY_JSON));
 
     EXPECT_FALSE(this->apiModel->loginUsernamePassword(this->MOCK_VALID_CONFIG));
@@ -210,19 +214,19 @@ TEST_F(APIModelTest, loginUsernamePassword_returnsFalseWhenResponseIsEmpty) {
 }
 
 TEST_F(APIModelTest, loginUsernamePassword_returnsFalseWhenResponseIsNull) {
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::LOGIN)).Times(1);
-    EXPECT_CALL(mockCprHelper, setPayload(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::LOGIN)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setPayload(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Field::USERNAME, this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::USERNAME)},
         {REDBetterR::API::Constants::Field::PASSWORD, this->MOCK_VALID_CONFIG.at(REDBetterR::API::Constants::Field::PASSWORD)}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, post()).Times(1);
-    EXPECT_CALL(mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
-    EXPECT_CALL(mockCprHelper, setParameters(std::map<std::string, std::string>{
+    EXPECT_CALL(*mockCprHelper, post()).Times(1);
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::API::Constants::URL::AJAX)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setParameters(std::map<std::string, std::string>{
         {REDBetterR::API::Constants::Parameter::ACTION, REDBetterR::API::Constants::Action::INDEX}
     })).Times(1);
-    EXPECT_CALL(mockCprHelper, get()).Times(1)
+    EXPECT_CALL(*mockCprHelper, get()).Times(1)
         .WillRepeatedly(Return(MOCK_INDEX_RESPONSE_SUCCESS));
-    EXPECT_CALL(mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
+    EXPECT_CALL(*mockJsonHelper, parse(MOCK_INDEX_RESPONSE_SUCCESS.text)).Times(1)
         .WillOnce(Return(nullptr));
 
     EXPECT_FALSE(this->apiModel->loginUsernamePassword(this->MOCK_VALID_CONFIG));

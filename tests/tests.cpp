@@ -6,6 +6,7 @@
 #include "unit-tests/APIControllerTest.cpp"
 #include "unit-tests/StatusModelTest.cpp"
 #include "unit-tests/StatusControllerTest.cpp"
+#include "unit-tests/ControllerFactoryTest.cpp"
 
 int main(int argc, char** argv) {
     // The following line must be executed to initialize Google Mock

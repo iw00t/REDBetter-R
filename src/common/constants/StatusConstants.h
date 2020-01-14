@@ -8,6 +8,8 @@
 namespace REDBetterR {
     namespace Status {
         namespace Constants {
+            const std::string NAME = "status";
+
             class URL {
             public:
                 static const std::string RED_TRACKER_STATUS_ALL;

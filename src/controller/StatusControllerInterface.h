@@ -11,7 +11,7 @@ namespace REDBetterR {
         class StatusControllerInterface : public BaseControllerInterface {
         public:
             ~StatusControllerInterface() override = default;
-            virtual void status() const = 0;
+            virtual void status() = 0;
         };
     }
 }

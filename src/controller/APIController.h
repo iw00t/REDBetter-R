@@ -2,21 +2,20 @@
 #define API_CONTROLLER
 
 #include "BaseController.h"
-#include "../model/APIModel.h"
+#include "APIControllerInterface.h"
 #include "../model/APIModelInterface.h"
-#include "../view/APIView.h"
 #include "../view/APIViewInterface.h"
 
 namespace REDBetterR {
     namespace API {
-        class APIController : public BaseController {
+        class APIController : public BaseController, public APIControllerInterface {
         public:
-            APIController(APIModelInterface & model, APIViewInterface & view);
+            APIController(std::shared_ptr<APIModelInterface> & model, std::shared_ptr<APIViewInterface> & view);
             void login(const std::map<std::string, std::string> & config);
 
         private:
-            APIModelInterface* getModel();
-            APIViewInterface* getView();
+            std::shared_ptr<APIModelInterface> getModel();
+            std::shared_ptr<APIViewInterface> getView();
         };
     }
 }

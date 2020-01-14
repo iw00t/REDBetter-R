@@ -8,6 +8,8 @@
 namespace REDBetterR {
     namespace API {
         namespace Constants {
+            const std::string NAME = "api";
+
             class Metadata {
             public:
                 static const bool VERIFY_SSL;

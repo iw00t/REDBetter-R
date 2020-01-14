@@ -2,7 +2,7 @@
 
 namespace REDBetterR {
     namespace API {
-        APIController::APIController(APIModelInterface & model, APIViewInterface & view) : BaseController(model, view) {}
+        APIController::APIController(std::shared_ptr<APIModelInterface> & model, std::shared_ptr<APIViewInterface> & view) : BaseController(model, view) {}
 
         void APIController::login(const std::map<std::string, std::string> & config) {
             bool loginSuccessful = false;
@@ -22,12 +22,12 @@ namespace REDBetterR {
             }
         }
 
-        APIModelInterface* APIController::getModel(){
-            return dynamic_cast<APIModelInterface*>(BaseController::getModel());
+        std::shared_ptr<APIModelInterface> APIController::getModel() {
+            return std::dynamic_pointer_cast<APIModelInterface>(BaseController::getModel());
         }
 
-        APIViewInterface* APIController::getView(){
-            return dynamic_cast<APIViewInterface*>(BaseController::getView());
+        std::shared_ptr<APIViewInterface> APIController::getView() {
+            return std::dynamic_pointer_cast<APIViewInterface>(BaseController::getView());
         }
     }
 }

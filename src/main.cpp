@@ -1,38 +1,24 @@
-#include "model/ConfigModel.h"
-#include "view/ConfigView.h"
 #include "controller/ConfigController.h"
-#include "model/APIModel.h"
-#include "view/APIView.h"
 #include "controller/APIController.h"
-#include "model/StatusModel.h"
-#include "view/StatusView.h"
 #include "controller/StatusController.h"
+
+#include "common/constants/APIConstants.h"
 #include "common/constants/ConfigConstants.h"
-#include "common/helper/CprHelper.h"
-#include "common/helper/JsonHelper.h"
+#include "common/constants/StatusConstants.h"
+
+#include "common/factory/ControllerFactory.h"
 
 
 int main() {
-    REDBetterR::Common::CprHelper cprHelper;
-    REDBetterR::Common::JsonHelper jsonHelper;
-    REDBetterR::Status::StatusModel statusModel(cprHelper, jsonHelper);
-    REDBetterR::Status::StatusView statusView;
-    REDBetterR::Status::StatusController statusController(statusModel, statusView);
-    statusController.status();
+    auto statusController = std::dynamic_pointer_cast<REDBetterR::Status::StatusController>(REDBetterR::Factory::ControllerFactory::create(REDBetterR::Status::Constants::NAME));
+    statusController->status();
 
-    REDBetterR::Config::ConfigModel configModel;
-    REDBetterR::Config::ConfigView configView;
-    REDBetterR::Config::ConfigController configController(configModel, configView);
+    auto configController = std::dynamic_pointer_cast<REDBetterR::Config::ConfigController>(REDBetterR::Factory::ControllerFactory::create(REDBetterR::Config::Constants::NAME));
 
-    if (configController.loadConfig(REDBetterR::Config::Constants::File::FILE_PATH)) {
-        std::map<std::string, std::string> config = configController.getConfig();
+    if (configController->loadConfig(REDBetterR::Config::Constants::File::FILE_PATH)) {
+        std::map<std::string, std::string> config = configController->getConfig();
 
-        REDBetterR::Common::CprHelper cprHelper;
-        REDBetterR::Common::JsonHelper jsonHelper;
-        REDBetterR::API::APIModel apiModel(cprHelper, jsonHelper);
-        REDBetterR::API::APIView apiView;
-        REDBetterR::API::APIController apiController(apiModel, apiView);
-
-        apiController.login(config);
+        auto apiController = std::dynamic_pointer_cast<REDBetterR::API::APIController>(REDBetterR::Factory::ControllerFactory::create(REDBetterR::API::Constants::NAME));
+        apiController->login(config);
     }
 }

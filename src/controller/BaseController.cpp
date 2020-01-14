@@ -2,24 +2,24 @@
 
 
 namespace REDBetterR {
-    BaseController::BaseController(BaseModelInterface & model, BaseViewInterface & view) {
-        this->model = &model;
-        this->view = &view;
+    BaseController::BaseController(std::shared_ptr<BaseModelInterface> model, std::shared_ptr<BaseViewInterface> view) {
+        this->setModel(model);
+        this->setView(view);
     }
 
-    void BaseController::setModel(BaseModelInterface & model) {
-        this->model = &model;
+    void BaseController::setModel(std::shared_ptr<BaseModelInterface> model) {
+        this->model = model;
     }
 
-    void BaseController::setView(BaseViewInterface & view) {
-        this->view = &view;
+    void BaseController::setView(std::shared_ptr<BaseViewInterface> view) {
+        this->view = view;
     }
 
-    BaseModelInterface* BaseController::getModel() const {
-        return dynamic_cast<BaseModelInterface*>(this->model);
+    std::shared_ptr<BaseModelInterface> BaseController::getModel() const {
+        return this->model;
     }
 
-    BaseViewInterface* BaseController::getView() const {
-        return dynamic_cast<BaseViewInterface*>(this->view);
+    std::shared_ptr<BaseViewInterface> BaseController::getView() const {
+        return this->view;
     }
 }

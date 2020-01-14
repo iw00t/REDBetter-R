@@ -9,7 +9,7 @@
 
 namespace REDBetterR {
     namespace Config {
-        class ConfigView : public ConfigViewInterface {
+        class ConfigView : public BaseView, public ConfigViewInterface {
         public:
             void displayConfigMissing() const;
             void displayConfigFieldMissing() const;

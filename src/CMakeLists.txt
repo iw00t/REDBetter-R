@@ -29,7 +29,8 @@ set(JsonHelper common/helper/JsonHelperInterface.h common/helper/JsonHelper.h co
 set(APIConstants common/constants/APIConstants.h common/constants/APIConstants.cpp)
 set(ConfigConstants common/constants/ConfigConstants.h common/constants/ConfigConstants.cpp)
 set(StatusConstants common/constants/StatusConstants.h common/constants/StatusConstants.cpp)
-add_library(Common ${CprHelper} ${JsonHelper} ${APIConstants} ${ConfigConstants} ${StatusConstants})
+set(ControllerFactory common/factory/ControllerFactoryInterface.h common/factory/ControllerFactory.h common/factory/ControllerFactory.cpp)
+add_library(Common ${CprHelper} ${JsonHelper} ${APIConstants} ${ConfigConstants} ${StatusConstants} ${ControllerFactory})
 
 include_directories(. ../opt/)
 

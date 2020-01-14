@@ -3,9 +3,9 @@
 
 namespace REDBetterR {
     namespace Config {
-        ConfigController::ConfigController(ConfigModelInterface & model, ConfigViewInterface & view) : BaseController(model, view) {}
+        ConfigController::ConfigController(std::shared_ptr<ConfigModelInterface> & model, std::shared_ptr<ConfigViewInterface> & view) : BaseController(model, view) {}
 
-        bool ConfigController::loadConfig(const std::string & filePath) const {
+        bool ConfigController::loadConfig(const std::string & filePath) {
             if (this->getModel()->configFileExists(filePath)) {
                 if (!this->getModel()->configHasCorrectKeys(filePath)) {
                     this->getView()->displayConfigFieldMissing();
@@ -23,16 +23,16 @@ namespace REDBetterR {
             return false;
         }
 
-        std::map<std::string, std::string> ConfigController::getConfig() const {
+        std::map<std::string, std::string> ConfigController::getConfig() {
             return this->getModel()->getConfigMap();
         }
 
-        ConfigModelInterface* ConfigController::getModel() const {
-            return dynamic_cast<ConfigModelInterface*>(BaseController::getModel());
+        std::shared_ptr<ConfigModelInterface> ConfigController::getModel() {
+            return std::dynamic_pointer_cast<ConfigModelInterface>(BaseController::getModel());
         }
 
-        ConfigViewInterface* ConfigController::getView() const {
-            return dynamic_cast<ConfigViewInterface*>(BaseController::getView());
+        std::shared_ptr<ConfigViewInterface> ConfigController::getView() {
+            return std::dynamic_pointer_cast<ConfigViewInterface>(BaseController::getView());
         }
     }
 }

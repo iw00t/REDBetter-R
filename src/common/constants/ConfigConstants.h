@@ -8,6 +8,8 @@
 namespace REDBetterR {
     namespace Config {
         namespace Constants {
+            const std::string NAME = "config";
+
             class File {
             public:
                 static const std::string FILE_PATH;
