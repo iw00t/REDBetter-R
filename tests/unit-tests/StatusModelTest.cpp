@@ -1,6 +1,6 @@
 #include "TestCase.h"
 #include "../../src/model/StatusModel.h"
-#include "../../src/common/constants/StatusConstants.h"
+#include "../common/constants/StatusTestConstants.h"
 #include "../mock-classes/MockCprHelper.h"
 #include "../mock-classes/MockJsonHelper.h"
 
@@ -24,7 +24,7 @@ public:
 };
 
 TEST_F(StatusModelTest, getStatus) {
-    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::Status::Constants::URL::RED_TRACKER_STATUS_ALL)).Times(1);
+    EXPECT_CALL(*mockCprHelper, setUrl(REDBetterR::StatusTest::Constants::URL::RED_TRACKER_STATUS_ALL)).Times(1);
     EXPECT_CALL(*mockCprHelper, get()).Times(1).WillOnce(Return(MOCK_CPR_RESPONSE));
     EXPECT_CALL(*mockJsonHelper, parse(MOCK_CPR_RESPONSE.text)).Times(1).WillOnce(Return(MOCK_STATUS_JSON));
 
