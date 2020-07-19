@@ -7,7 +7,6 @@
 namespace REDBetterR {
     namespace API {
         APIModel::APIModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper, std::shared_ptr<Common::JsonHelperInterface> & jsonHelper) : BaseModel(cprHelper, jsonHelper) {
-            this->getCprHelper()->setVerifySsl(Constants::Metadata::VERIFY_SSL);
             this->getCprHelper()->setHeader(Constants::Metadata::HEADER);
         }
 

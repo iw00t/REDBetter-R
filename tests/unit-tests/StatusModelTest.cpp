@@ -12,6 +12,7 @@ public:
         this->mockJsonHelper = std::make_shared<MockJsonHelper>();
         std::shared_ptr<REDBetterR::Common::CprHelperInterface> cprHelper = this->mockCprHelper;
         std::shared_ptr<REDBetterR::Common::JsonHelperInterface> jsonHelper = this->mockJsonHelper;
+        EXPECT_CALL(*mockCprHelper, setVerifySsl(REDBetterR::StatusTest::Constants::Metadata::VERIFY_SSL)).Times(1);
         this->statusModel = std::make_shared<REDBetterR::Status::StatusModel>(cprHelper, jsonHelper);
     }
 

@@ -5,6 +5,7 @@ namespace REDBetterR {
     BaseModel::BaseModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper, std::shared_ptr<Common::JsonHelperInterface> & jsonHelper) {
         this->cprHelper = cprHelper;
         this->jsonHelper = jsonHelper;
+        this->getCprHelper()->setVerifySsl(false);
     }
 
     BaseModel::BaseModel(std::shared_ptr<Common::CprHelperInterface> & cprHelper) {

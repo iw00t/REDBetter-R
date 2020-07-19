@@ -4,6 +4,8 @@
 namespace REDBetterR {
     namespace StatusTest {
         namespace Constants {
+            const bool Metadata::VERIFY_SSL = false;
+
             const std::string URL::RED_TRACKER_STATUS_ALL = "https://red.trackerstatus.info/api/all/";
 
             const std::unordered_map<std::string, std::string> JSON::SERVICES = {

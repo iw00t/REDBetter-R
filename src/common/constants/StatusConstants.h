@@ -10,6 +10,11 @@ namespace REDBetterR {
         namespace Constants {
             const std::string NAME = "status";
 
+            class Metadata {
+            public:
+                static const bool VERIFY_SSL;
+            };
+
             class URL {
             public:
                 static const std::string RED_TRACKER_STATUS_ALL;
