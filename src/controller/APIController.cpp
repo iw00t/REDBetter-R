@@ -1,5 +1,11 @@
 #include "APIController.h"
 
+#include "../vo/ReleaseVO.h"
+
+#include <map>
+#include <vector>
+#include <iostream>
+
 namespace REDBetterR {
     namespace API {
         APIController::APIController(std::shared_ptr<APIModelInterface> & model, std::shared_ptr<APIViewInterface> & view) : BaseController(model, view) {}
@@ -20,6 +26,24 @@ namespace REDBetterR {
             } else {
                 this->getView()->displayLoginFailed();
             }
+        }
+
+        std::vector<VO::ReleaseVO> APIController::getTranscodeCandidates() {
+            this->getView()->displayObtainingSnatchedTorrents();
+            std::map<std::string, std::string> snatchedInfo = this->getModel()->getSnatched();
+
+            int count = 0;
+            int totalTranscodeCandidates = snatchedInfo.size();
+            std::vector<VO::ReleaseVO> transcodeCandidates = std::vector<VO::ReleaseVO>();
+            for (const auto snatchedInfoItem : snatchedInfo) {
+                count++;
+                this->getView()->displayObtainingTranscodeCandidates(count, totalTranscodeCandidates);
+                transcodeCandidates.push_back(this->getModel()->getReleaseInfo(snatchedInfoItem));
+                if (count > 10) {
+                    return transcodeCandidates;
+                }
+            }
+            return transcodeCandidates;
         }
 
         std::shared_ptr<APIModelInterface> APIController::getModel() {

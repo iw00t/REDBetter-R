@@ -18,6 +18,7 @@ namespace REDBetterR {
             const std::string URL::BASE = "https://redacted.ch/";
             const std::string URL::LOGIN = URL::BASE + "login.php";
             const std::string URL::AJAX = URL::BASE + "ajax.php";
+            const std::string URL::TORRENTS = URL::BASE + "torrents.php";
 
             const std::string Field::USERNAME = "username";
             const std::string Field::PASSWORD = "password";
@@ -41,8 +42,16 @@ namespace REDBetterR {
 
             const std::string Parameter::ACTION = "action";
             const std::string Parameter::AUTH = "auth";
+            const std::string Parameter::TYPE = "type";
+            const std::string Parameter::SNATCHED = "snatched";
+            const std::string Parameter::USERID = "userid";
+            const std::string Parameter::FORMAT = "format";
+            const std::string Parameter::FLAC = "FLAC";
+            const std::string Parameter::PAGE = "page";
+            const std::string Parameter::GROUP_ID = "id";
 
             const std::string Action::INDEX = "index";
+            const std::string Action::TORRENT_GROUP = "torrentgroup";
             
             const std::string Output::SPACER = " : ";
             const int Output::SPACING = 14;

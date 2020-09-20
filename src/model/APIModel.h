@@ -15,7 +15,9 @@ namespace REDBetterR {
             bool sessionCookieSet(const std::map<std::string, std::string> & config);
             bool loginCookie(const std::map<std::string, std::string> & config);
             bool loginUsernamePassword(const std::map<std::string, std::string> & config);
-            nlohmann::json getUserInfo() const;
+            nlohmann::json getUserInfo();
+            std::map<std::string, std::string> getSnatched();
+            VO::ReleaseVO getReleaseInfo(const std::pair<std::string, std::string> & snatchedTorrents);
 
             std::string getAuthkey() const;
             void setAuthkey(const std::string & authkey);
@@ -28,7 +30,13 @@ namespace REDBetterR {
             std::string authkey;
             std::string passkey;
             unsigned int userId = 0;
-            nlohmann::json request(const std::string & action) const;
+
+            nlohmann::json getGroupInfo(const std::string & groupId);
+            nlohmann::json getTorrentInfo(const nlohmann::json & torrentInfo) const;
+            std::string getArtist(const nlohmann::json & artistsArray) const;
+            std::string getYear(const std::string & remasterYear, const std::string & groupYear) const;
+            nlohmann::json doAPIRequest(const std::string & action, const std::map<std::string, std::string> & additionalParameters = std::map<std::string, std::string>());
+            std::string doHTMLRequest(const std::string & url, const std::map<std::string, std::string> & parameters);
         };
     }
 }

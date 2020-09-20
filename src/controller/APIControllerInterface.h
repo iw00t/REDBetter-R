@@ -13,6 +13,7 @@ namespace REDBetterR {
         public:
             ~APIControllerInterface() override = default;
             virtual void login(const std::map<std::string, std::string> &) = 0;
+            virtual std::vector<VO::ReleaseVO> getTranscodeCandidates() = 0;
         };
     }
 }

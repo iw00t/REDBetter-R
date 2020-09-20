@@ -13,8 +13,8 @@ public:
     MOCK_METHOD1(setPayload, void(const std::map<std::string, std::string> &));
     MOCK_METHOD1(setParameters, void(const std::map<std::string, std::string> &));
     MOCK_METHOD1(setVerifySsl, void(bool));
-    MOCK_CONST_METHOD0(get, cpr::Response());
-    MOCK_CONST_METHOD0(post, cpr::Response());
+    MOCK_METHOD0(get, cpr::Response());
+    MOCK_METHOD0(post, cpr::Response());
 };
 
 #endif // MOCK_CPR_HELPER

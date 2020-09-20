@@ -15,8 +15,8 @@ namespace REDBetterR {
             virtual void setPayload(const std::map<std::string, std::string> &) = 0;
             virtual void setParameters(const std::map<std::string, std::string> &) = 0;
             virtual void setVerifySsl(bool) = 0;
-            virtual cpr::Response get() const = 0;
-            virtual cpr::Response post() const = 0;
+            virtual cpr::Response get() = 0;
+            virtual cpr::Response post() = 0;
         };
     }
 }

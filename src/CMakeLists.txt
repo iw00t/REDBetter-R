@@ -5,11 +5,17 @@ include_directories(${MY_SOURCE_DIR}/common ${MY_SOURCE_DIR}/model ${MY_SOURCE_D
 # common
 set(CprHelper common/helper/CprHelperInterface.h common/helper/CprHelper.h common/helper/CprHelper.cpp)
 set(JsonHelper common/helper/JsonHelperInterface.h common/helper/JsonHelper.h common/helper/JsonHelper.cpp)
+set(CommonConstants common/constants/CommonConstants.h)
 set(APIConstants common/constants/APIConstants.h common/constants/APIConstants.cpp)
 set(ConfigConstants common/constants/ConfigConstants.h common/constants/ConfigConstants.cpp)
 set(StatusConstants common/constants/StatusConstants.h common/constants/StatusConstants.cpp)
 set(ControllerFactory common/factory/ControllerFactoryInterface.h common/factory/ControllerFactory.h common/factory/ControllerFactory.cpp)
-add_library(Common SHARED ${CprHelper} ${JsonHelper} ${APIConstants} ${ConfigConstants} ${StatusConstants} ${ControllerFactory})
+add_library(Common SHARED ${CprHelper} ${JsonHelper} ${CommonConstants} ${APIConstants} ${ConfigConstants} ${StatusConstants} ${ControllerFactory})
+
+# vo
+set(VOs vo/VOBuilder.h vo/BaseVO.h vo/ReleaseVO.h)
+add_library(VO SHARED ${VOs})
+set_target_properties(VO PROPERTIES LINKER_LANGUAGE CXX)
 
 # models
 set(BaseModel model/BaseModelInterface.h model/BaseModel.h model/BaseModel.cpp)
@@ -35,5 +41,5 @@ add_library(Controllers ${BaseController} ${ConfigController} ${APIController} $
 include_directories(. ../opt/)
 
 add_executable(REDBetter-R main.cpp)
-target_link_libraries(REDBetter-R Common Controllers Models Views ${CPR_LIBRARIES})
+target_link_libraries(REDBetter-R Common VO Controllers Models Views ${CPR_LIBRARIES})
 include_directories(${CPR_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS})

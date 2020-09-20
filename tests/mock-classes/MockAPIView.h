@@ -13,6 +13,8 @@ public:
     MOCK_CONST_METHOD0(displayLoginSuccessful, void());
     MOCK_CONST_METHOD0(displayLoginFailed, void());
     MOCK_CONST_METHOD1(displayUserInfo, void(const nlohmann::json &));
+    MOCK_CONST_METHOD0(displayObtainingSnatchedTorrents, void());
+    MOCK_CONST_METHOD2(displayObtainingTranscodeCandidates, void(int current, int total));
 };
 
 #endif // MOCK_API_VIEW

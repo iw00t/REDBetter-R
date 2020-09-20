@@ -21,6 +21,7 @@ namespace REDBetterR {
                 static const std::string BASE;
                 static const std::string LOGIN;
                 static const std::string AJAX;
+                static const std::string TORRENTS;
             };
 
             class Field {
@@ -56,11 +57,19 @@ namespace REDBetterR {
             public:
                 static const std::string ACTION;
                 static const std::string AUTH;
+                static const std::string TYPE;
+                static const std::string SNATCHED;
+                static const std::string USERID;
+                static const std::string FORMAT;
+                static const std::string FLAC;
+                static const std::string PAGE;
+                static const std::string GROUP_ID;
             };
 
             class Action {
             public:
                 static const std::string INDEX;
+                static const std::string TORRENT_GROUP;
             };
 
             class Output {

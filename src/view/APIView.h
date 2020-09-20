@@ -13,6 +13,8 @@ namespace REDBetterR {
             void displayLoginSuccessful() const;
             void displayLoginFailed() const;
             void displayUserInfo(const nlohmann::json & userInfo) const;
+            void displayObtainingSnatchedTorrents() const;
+            void displayObtainingTranscodeCandidates(int current, int total) const;
         private:
             std::string bytesToGigabytes(const double & bytes) const;
             void displayLoginBanner() const;

@@ -70,6 +70,14 @@ namespace REDBetterR {
             this->displaySpacer();
         }
 
+        void APIView::displayObtainingSnatchedTorrents() const {
+            std::cout << "Obtaining snatched torrents..." << std::endl;
+        }
+
+        void APIView::displayObtainingTranscodeCandidates(int current, int total) const {
+            std::cout << "Obtaining transcode candidates (" << current << " / " << total <<  ")..." << std::endl;
+        }
+
         void APIView::displayLoginBanner() const {
             this->displaySpacer();
             std::cout << "Login" << std::endl;

@@ -17,11 +17,16 @@ namespace REDBetterR {
             void setPayload(const std::map<std::string, std::string> & payloads);
             void setParameters(const std::map<std::string, std::string> & parameters);
             void setVerifySsl(bool verifySsl);
-            cpr::Response get() const;
-            cpr::Response post() const;
+            cpr::Response get();
+            cpr::Response post();
 
         private:
             cpr::Session* session = new cpr::Session();
+            unsigned long long lastRequestTime;
+
+            void setLastRequestTime();
+            void rateLimit();
+            unsigned long long getCurrentTime() const;
         };
     }
 }

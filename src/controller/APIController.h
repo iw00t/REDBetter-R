@@ -12,6 +12,7 @@ namespace REDBetterR {
         public:
             APIController(std::shared_ptr<APIModelInterface> & model, std::shared_ptr<APIViewInterface> & view);
             void login(const std::map<std::string, std::string> & config);
+            std::vector<VO::ReleaseVO> getTranscodeCandidates();
 
         private:
             std::shared_ptr<APIModelInterface> getModel();

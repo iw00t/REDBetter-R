@@ -19,6 +19,8 @@ namespace REDBetterR {
             virtual void displayLoginSuccessful() const = 0;
             virtual void displayLoginFailed() const = 0;
             virtual void displayUserInfo(const nlohmann::json &) const = 0;
+            virtual void displayObtainingSnatchedTorrents() const = 0;
+            virtual void displayObtainingTranscodeCandidates(int current, int total) const = 0;
         };
     }
 }

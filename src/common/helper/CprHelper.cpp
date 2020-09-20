@@ -1,4 +1,5 @@
 #include "CprHelper.h"
+#include <iostream>
 
 
 namespace REDBetterR {
@@ -35,12 +36,34 @@ namespace REDBetterR {
             this->session->SetVerifySsl(verifySsl);
         }
 
-        cpr::Response CprHelper::get() const {
-            return this->session->Get();
+        cpr::Response CprHelper::get() {
+            cpr::Response response = this->session->Get();
+            this->rateLimit();
+            this->setLastRequestTime();
+            return response;
         }
 
-        cpr::Response CprHelper::post() const {
-            return this->session->Post();
+        cpr::Response CprHelper::post() {
+            cpr::Response response = this->session->Post();
+            this->rateLimit();
+            this->setLastRequestTime();
+            return response;
+        }
+
+        void CprHelper::setLastRequestTime() {
+            this->lastRequestTime = this->getCurrentTime();
+        }
+
+        void CprHelper::rateLimit() {
+            unsigned long long currentTime = this->getCurrentTime();
+            while (currentTime - this->lastRequestTime < 2) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                currentTime = this->getCurrentTime();
+            }
+        }
+
+        unsigned long long CprHelper::getCurrentTime() const {
+            return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
         }
     }
 }
